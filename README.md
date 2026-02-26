@@ -6,7 +6,7 @@ I should also mention that the presets are made possible using geofiles from the
 
 ## Client apps
 * **xray/v2ray** — [v2rayN](https://github.com/2dust/v2rayN) (Linux, Win, macOS), [v2rayNG](https://github.com/2dust/v2rayNG) (Android), [v2RayTun](https://github.com/DigneZzZ/v2raytun) (Android, iOS, Win (uses sing-box), [Happ](https://www.happ.su/main) (*not recommended*)
-* **sing-box** — [Throne](https://github.com/throneproj/Throne) (Linux, Win, macOS), [NekoBox](https://github.com/MatsuriDayo/NekoBoxForAndroid) (Android (Play Store version has been compromised))
+* **sing-box** — [Throne](https://github.com/throneproj/Throne) (Linux, Win, macOS), [NyameBox](https://github.com/qr243vbi/nekobox) (Linux, Win), [NekoBox](https://github.com/starifly/NekoBoxForAndroid) (Android)
 
 ## Presets
 
