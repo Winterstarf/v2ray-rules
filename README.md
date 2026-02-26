@@ -5,8 +5,8 @@ Even though I initially created this repo to only contain v2ray/xray .json-forma
 I should also mention that the presets are made possible using geofiles from the [runetfreedom](https://github.com/runetfreedom/russia-v2ray-rules-dat) repo, which are maintained by the community.
 
 ## Client apps
-* **xray/v2ray** — [v2rayN](https://github.com/2dust/v2rayN) (Linux, Win, macOS), [v2rayNG](https://github.com/2dust/v2rayNG) (Android), [v2RayTun](https://github.com/DigneZzZ/v2raytun) (Android, iOS, Win (uses sing-box), [Happ](https://www.happ.su/main) (Android, iOS, Linux, Win, macOS)
-* **sing-box** — [Throne](https://github.com/throneproj/Throne) (Linux, Win, macOS), [NyameBox](https://github.com/qr243vbi/nekobox) (Linux, Win), [NekoBox](https://github.com/starifly/NekoBoxForAndroid) (Android)
+* **xray/v2ray** — [v2rayN](https://github.com/2dust/v2rayN) (Linux, Win, macOS), [v2rayNG](https://github.com/2dust/v2rayNG) (Android), [v2RayTun](https://github.com/DigneZzZ/v2raytun) (Android, iOS, Win (uses sing-box), [Happ](https://www.happ.su/main) (Android, iOS, Linux, Win, macOS), [Streisand](https://apps.apple.com/us/app/streisand/id6450534064) (iOS)
+* **sing-box** — [Throne](https://github.com/throneproj/Throne) (Linux, Win, macOS), [NyameBox](https://github.com/qr243vbi/nekobox) (Linux, Win), [NekoBox](https://github.com/starifly/NekoBoxForAndroid) (Android), [husi](https://github.com/xchacha20-poly1305/husi) (Android)
 
 ## Presets
 
