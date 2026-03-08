@@ -49,11 +49,6 @@
     ],
     "enabled": true,
     "remarks": "Direct RU CIDR"
-  },
-  {
-    "port": "0-65535",
-    "outboundTag": "proxy",
-    "enabled": true,
-    "remarks": "Proxy else"
   }
 ]
+
