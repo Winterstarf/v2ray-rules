@@ -69,12 +69,7 @@
     ],
     "enabled": true,
     "remarks": "Proxy blocked CIDR"
-  },
-  {
-    "port": "0-65535",
-    "outboundTag": "direct",
-    "enabled": true,
-    "remarks": "Direct else"
   }
 ]
+
 
