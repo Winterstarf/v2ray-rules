@@ -63,7 +63,7 @@ To use my specific profiles (overwriting the defaults if desired):
 7. Select **Append** if you've created a new profile, or **Replace** if you're editing a default preset.
 
 Alternatively, if pasting from URL won't work for you, you can always visit the page, copy all .json contents, and press **Import from clipboard**, then either **Append** or **Replace** as stated above.
-Same thing goes for updating the rules.
+\Same thing goes for updating the rules.
 
 > ### Updating
 > When you need to update the rules to the latest version:
