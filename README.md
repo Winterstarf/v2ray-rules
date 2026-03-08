@@ -33,8 +33,7 @@ Note that **v2ray/xray** and **sing-box** rules *might have* differences to some
 
 ---
 # Guides
-This section is completely optional, because it is generally easy to import and use routing presets. However, I did make some basic how-to's just in case someone would need them.
-
+This section is completely optional, because it is generally easy to import and use routing presets. However, I did make some basic how-to's just in case someone would need them.\
 Be wary that most apps already have means of downloading some basic routing presets made either by their authors or by the community, therefore you may or may not need my custom presets from this repo (why would you come here then, anyways?), so in case if you do want to apply custom rules, either mine or your own, continue with the guides below.
 
 ## v2rayN
@@ -62,8 +61,8 @@ To use my specific profiles (overwriting the defaults if desired):
 6. Click **Import rules from subscription url**.
 7. Select **Append** if you've created a new profile, or **Replace** if you're editing a default preset.
 
-Alternatively, if pasting from URL won't work for you, you can always visit the page, copy all .json contents, and press **Import from clipboard**, then either **Append** or **Replace** as stated above.
-\Same thing goes for updating the rules.
+Alternatively, if pasting from URL won't work for you, you can always visit the page, copy all .json contents, and press **Import from clipboard**, then either **Append** or **Replace** as stated above.\
+Same thing goes for updating the rules.
 
 > ### Updating
 > When you need to update the rules to the latest version:
