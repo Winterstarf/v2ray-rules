@@ -1,0 +1,107 @@
+{
+	log {
+		output stderr
+		format json
+	}
+
+	servers {
+		protocols h1 h2 h2c
+	}
+
+	# Main website socket
+	servers unix//dev/shm/caddy.sock {
+		listener_wrappers {
+			proxy_protocol
+			tls
+		}
+	}
+}
+
+# shared logic
+(common_site) {
+	root * /var/www/html
+	file_server
+
+	encode zstd gzip
+
+	header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+	header X-Content-Type-Options "nosniff"
+	header X-Frame-Options "SAMEORIGIN"
+	header X-Robots-Tag "noindex, nofollow, noarchive, nosnippet, noimageindex"
+
+	@blocked {
+		path_regexp (?i)(^\.\./|\.(env|git|htaccess|ssh|asp|php|aspx|sql|bak|config|yaml|yml|ini|log)$|/(wp-admin|wp-login|phpmyadmin|admin|backup|config|db|setup|shell|api/v1/user/config)|/(uploads|temp|tmp|scripts|bin|etc|var|usr)/.*\.sh$)
+	}
+	handle @blocked {
+		abort
+	}
+
+	handle /manifest.json {
+		header Content-Type "application/manifest+json"
+		file_server
+	}
+
+	@assets {
+		path *.css *.js *.png *.jpg *.jpeg *.gif *.ico *.svg *.woff2 *.mp4 *.webm
+	}
+	handle @assets {
+		header Cache-Control "public, max-age=2592000"
+		file_server
+	}
+}
+
+# Redirect HTTP
+http://<NODE_DOMAIN> {
+	log {
+		output stdout
+		format json
+	}
+
+	redir https://{host}{uri} permanent
+}
+
+# Main server
+https://<NODE_DOMAIN> {
+	log {
+		output stdout
+		format json
+	}
+
+	bind unix//dev/shm/caddy.sock
+
+	# Load local certs
+	tls /etc/caddy/ssl/fullchain.pem /etc/caddy/ssl/privkey.key
+
+	# xHTTP v1
+	reverse_proxy /api/v1/network/xZhtp7ecRYYAGUjQ6* unix//dev/shm/xr-vxht.sock {
+		transport http {
+			versions h2c 2
+		}
+		flush_interval -1
+		header_up X-Real-IP {client_ip}
+		header_up -Via
+	}
+
+	# WebSocket v1
+	reverse_proxy /api/v1/network/WYXd77bagAcBS3ejV* unix//dev/shm/xr-vwst.sock {
+		flush_interval -1
+		header_up X-Real-IP {client_ip}
+		header_up -Via
+	}
+
+	# gRPC v1
+	@grpc {
+		protocol grpc
+		path /apiRequestInteractionService/*
+	}
+	reverse_proxy @grpc unix//dev/shm/xr-vgrt.sock {
+		transport http {
+			versions h2c 2
+		}
+		flush_interval -1
+		header_up X-Real-IP {client_ip}
+		header_up -Via
+	}
+
+	import common_site
+}
