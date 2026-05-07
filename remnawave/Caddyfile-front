@@ -50,7 +50,7 @@
 			}
 			route @main {
 				proxy unix//dev/shm/caddy.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -63,7 +63,7 @@
 			}
 			route @self1 {
 				proxy unix//dev/shm/xr-vtcr-s1.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -78,7 +78,7 @@
 			}
 			route @foreign1 {
 				proxy unix//dev/shm/xr-vtcr-f1.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -91,7 +91,7 @@
 			}
 			route @foreign2 {
 				proxy unix//dev/shm/xr-vtcr-f2.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -104,7 +104,7 @@
 			}
 			route @foreign3 {
 				proxy unix//dev/shm/xr-vtcr-f3.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -117,7 +117,7 @@
 			}
 			route @foreign4 {
 				proxy unix//dev/shm/xr-vtcr-f4.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -130,7 +130,7 @@
 			}
 			route @foreign5 {
 				proxy unix//dev/shm/xr-vtcr-f5.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -143,7 +143,7 @@
 			}
 			route @foreign6 {
 				proxy unix//dev/shm/xr-vxhr-f1.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -156,7 +156,7 @@
 			}
 			route @foreign7 {
 				proxy unix//dev/shm/xr-vxhr-f2.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -169,7 +169,7 @@
 			}
 			route @foreign8 {
 				proxy unix//dev/shm/xr-vxhr-f3.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -182,7 +182,7 @@
 			}
 			route @foreign9 {
 				proxy unix//dev/shm/xr-vxhr-f4.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -195,7 +195,7 @@
 			}
 			route @foreign10 {
 				proxy unix//dev/shm/xr-vxhr-f5.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -208,7 +208,7 @@
 			}
 			route @foreign11 {
 				proxy unix//dev/shm/xr-vwsr-f1.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -221,7 +221,7 @@
 			}
 			route @foreign12 {
 				proxy unix//dev/shm/xr-vwsr-f2.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -234,7 +234,7 @@
 			}
 			route @foreign13 {
 				proxy unix//dev/shm/xr-vwsr-f3.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -247,7 +247,7 @@
 			}
 			route @foreign14 {
 				proxy unix//dev/shm/xr-vwsr-f4.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -260,7 +260,7 @@
 			}
 			route @foreign15 {
 				proxy unix//dev/shm/xr-vwsr-f5.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -273,7 +273,7 @@
 			}
 			route @foreign16 {
 				proxy unix//dev/shm/xr-vgrr-f1.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -286,7 +286,7 @@
 			}
 			route @foreign17 {
 				proxy unix//dev/shm/xr-vgrr-f2.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -299,7 +299,7 @@
 			}
 			route @foreign18 {
 				proxy unix//dev/shm/xr-vgrr-f3.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -312,7 +312,7 @@
 			}
 			route @foreign19 {
 				proxy unix//dev/shm/xr-vgrr-f4.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -325,7 +325,7 @@
 			}
 			route @foreign20 {
 				proxy unix//dev/shm/xr-vgrr-f5.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 
@@ -333,7 +333,7 @@
 			# Fallback to main website
 			route {
 				proxy unix//dev/shm/caddy.sock {
-					proxy_protocol v1
+					proxy_protocol v2
 				}
 			}
 		}
