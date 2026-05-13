@@ -1,0 +1,33 @@
+{
+  "Name": "Bypass Russia",
+  "GlobalProxy": "true",
+  "RouteOrder": "block-direct-proxy",
+  "RemoteDNSType": "DoH",
+  "RemoteDNSDomain": "",
+  "RemoteDNSIP": "",
+  "DomesticDNSType": "DoU",
+  "DomesticDNSDomain": "",
+  "DomesticDNSIP": "",
+  "Geoipurl": "https://raw.githubusercontent.com/runetfreedom/russia-v2ray-rules-dat/release/geoip.dat",
+  "Geositeurl": "https://raw.githubusercontent.com/runetfreedom/russia-v2ray-rules-dat/release/geosite.dat",
+  "LastUpdated": "",
+  "DnsHosts": {},
+  "DirectSites": [
+    "geosite:ru-available-only-inside",
+    "geosite:category-ru",
+    "geosite:private"
+  ],
+  "DirectIp": [
+    "geoip:ru",
+    "geoip:private"
+  ],
+  "ProxySites": [],
+  "ProxyIp": [],
+  "BlockSites": [
+    "geosite:category-ads-all"
+  ],
+  "BlockIp": [],
+  "DomainStrategy": "IPOnDemand",
+  "FakeDNS": "false",
+  "UseChunkFiles": "true"
+}
