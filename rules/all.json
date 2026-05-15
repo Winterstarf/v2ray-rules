@@ -3,7 +3,8 @@
     "port": "",
     "outboundTag": "block",
     "domain": [
-      "geosite:category-ads-all"
+      "geosite:category-ads-all",
+      "geosite:win-spy"
     ],
     "enabled": true,
     "remarks": "Block Ads"
@@ -14,7 +15,7 @@
       "geosite:private"
     ],
     "enabled": true,
-    "remarks": "Direct private domains"
+    "remarks": "Direct domains"
   },
   {
     "port": "",
@@ -31,7 +32,6 @@
       "geoip:private"
     ],
     "enabled": true,
-    "remarks": "Direct private CIDR"
+    "remarks": "Direct CIDRs"
   }
 ]
-
