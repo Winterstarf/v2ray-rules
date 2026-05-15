@@ -12,30 +12,16 @@
   {
     "outboundTag": "direct",
     "domain": [
-      "geosite:private"
-    ],
-    "enabled": true,
-    "remarks": "Direct private domains"
-  },
-  {
-    "outboundTag": "proxy",
-    "domain": [
+      "geosite:private",
       "geosite:discord",
       "geosite:telegram",
-      "geosite:whatsapp"
-    ],
-    "enabled": true,
-    "remarks": "Proxy social domains"
-  },
-  {
-    "outboundTag": "proxy",
-    "domain": [
+      "geosite:whatsapp",
       "geosite:ru-blocked",
       "geosite:google-gemini",
       "geosite:roblox"
     ],
     "enabled": true,
-    "remarks": "Proxy blocked domains"
+    "remarks": "Direct domains"
   },
   {
     "port": "",
@@ -52,23 +38,16 @@
       "geoip:private"
     ],
     "enabled": true,
-    "remarks": "Direct private CIDR"
-  },
-  {
-    "outboundTag": "proxy",
-    "ip": [
-      "geoip:telegram"
-    ],
-    "enabled": true,
-    "remarks": "Proxy social CIDR"
+    "remarks": "Direct CIDRs"
   },
   {
     "outboundTag": "proxy",
     "ip": [
       "geoip:ru-blocked-community",
-      "geoip:re-filter"
+      "geoip:re-filter",
+      "geoip:telegram"
     ],
     "enabled": true,
-    "remarks": "Proxy blocked CIDR"
+    "remarks": "Proxy CIDRs"
   }
 ]
