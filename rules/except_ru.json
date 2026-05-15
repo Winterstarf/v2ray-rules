@@ -12,19 +12,12 @@
   {
     "outboundTag": "direct",
     "domain": [
-      "geosite:private"
-    ],
-    "enabled": true,
-    "remarks": "Direct private domains"
-  },
-  {
-    "outboundTag": "direct",
-    "domain": [
+      "geosite:private",
       "geosite:ru-available-only-inside",
       "geosite:category-ru"
     ],
     "enabled": true,
-    "remarks": "Direct RU domains"
+    "remarks": "Direct domains"
   },
   {
     "port": "",
@@ -38,17 +31,10 @@
   {
     "outboundTag": "direct",
     "ip": [
-      "geoip:private"
-    ],
-    "enabled": true,
-    "remarks": "Direct private CIDR"
-  },
-  {
-    "outboundTag": "direct",
-    "ip": [
+      "geoip:private",
       "geoip:ru"
     ],
     "enabled": true,
-    "remarks": "Direct RU CIDR"
+    "remarks": "Direct CIDRs"
   }
 ]
