@@ -11,7 +11,14 @@
   {
     "outboundTag": "direct",
     "domain": [
-      "geosite:private",
+      "geosite:private"
+    ],
+    "enabled": true,
+    "remarks": "Direct domains"
+  },
+  {
+    "outboundTag": "proxy",
+    "domain": [
       "geosite:ru-blocked",
       "geosite:discord",
       "geosite:telegram",
@@ -20,7 +27,7 @@
       "geosite:roblox"
     ],
     "enabled": true,
-    "remarks": "Direct domains"
+    "remarks": "Proxy domains"
   },
   {
     "outboundTag": "direct",
