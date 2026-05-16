@@ -14,7 +14,6 @@
     "rule_set": [
       "geosite-private",
       "geoip-private",
-      "geosite-ru-available-only-inside",
       "geosite-category-ru",
       "geoip-ru"
     ]
