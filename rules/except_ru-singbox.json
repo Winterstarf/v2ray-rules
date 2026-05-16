@@ -1,27 +1,28 @@
-[{
+[
+  {
     "action": "hijack-dns",
     "protocol": "dns"
-}
-,{
+  },
+  {
     "action": "route",
     "outbound": "direct",
     "protocol": "bittorrent"
-}
-,{
+  },
+  {
     "action": "route",
     "outbound": "direct",
     "rule_set": [
-        "geosite-private",
-        "geoip-private",
-        "geosite-ru-available-only-inside",
-        "geosite-category-ru",
-        "geoip-ru"
+      "geosite-private",
+      "geoip-private",
+      "geosite-ru-available-only-inside",
+      "geosite-category-ru",
+      "geoip-ru"
     ]
-}
-,{
+  },
+  {
     "action": "reject",
     "rule_set": [
-        "geosite-category-ads-all"
+      "geosite-category-ads-all"
     ]
-}
+  }
 ]
