@@ -12,10 +12,10 @@
     "outboundTag": "direct",
     "domain": [
       "geosite:private",
+      "geosite:ru-blocked",
       "geosite:discord",
       "geosite:telegram",
       "geosite:whatsapp",
-      "geosite:ru-blocked",
       "geosite:google-gemini",
       "geosite:roblox"
     ],
