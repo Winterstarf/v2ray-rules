@@ -1,24 +1,25 @@
-[{
+[
+  {
     "action": "hijack-dns",
     "protocol": "dns"
-}
-,{
+  },
+  {
     "action": "route",
     "outbound": "direct",
     "protocol": "bittorrent"
-}
-,{
+  },
+  {
     "action": "route",
     "outbound": "direct",
     "rule_set": [
-        "geosite-private",
-        "geoip-private"
+      "geosite-private",
+      "geoip-private"
     ]
-}
-,{
+  },
+  {
     "action": "reject",
     "rule_set": [
-        "geosite-category-ads-all"
+      "geosite-category-ads-all"
     ]
-}
+  }
 ]
