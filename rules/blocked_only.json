@@ -41,8 +41,6 @@
   {
     "outboundTag": "proxy",
     "ip": [
-      "geoip:ru-blocked-community",
-      "geoip:re-filter",
       "geoip:telegram"
     ],
     "enabled": true,
