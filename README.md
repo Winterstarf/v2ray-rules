@@ -2,7 +2,7 @@
 These presets are made to proxy only those domains and CIDRs that are blocked in Russia, while directing domestic and non-restricted traffic to not hog up server bandwidth.\
 Even though I initially created this repo to contain **v2ray/xray** .json-formatted routing presets, I also made ones for **sing-box**.
 
-These presets are made based on .dat files from [v2fly](https://github.com/v2fly/domain-list-community) repo.
+Made based on .dat files from [v2fly](https://github.com/v2fly/domain-list-community) and [runetfreedom](https://github.com/runetfreedom/russia-v2ray-rules-dat) repos.
 
 ## Client apps
 * **v2ray/xray** — [v2rayN](https://github.com/2dust/v2rayN) (Linux, Win, macOS), [v2rayNG](https://github.com/2dust/v2rayNG) (Android), [INCY](https://incy.cc) (Android, iOS, Linux, Win, macOS), [Streisand](https://apps.apple.com/us/app/streisand/id6450534064) (iOS, macOS)
