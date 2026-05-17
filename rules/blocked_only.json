@@ -10,6 +10,14 @@
   },
   {
     "outboundTag": "direct",
+    "protocol": [
+      "bittorrent"
+    ],
+    "enabled": true,
+    "remarks": "Direct bittorrent"
+  },
+  {
+    "outboundTag": "direct",
     "domain": [
       "geosite:private"
     ],
@@ -28,14 +36,6 @@
     ],
     "enabled": true,
     "remarks": "Proxy domains"
-  },
-  {
-    "outboundTag": "direct",
-    "protocol": [
-      "bittorrent"
-    ],
-    "enabled": true,
-    "remarks": "Direct bittorrent"
   },
   {
     "outboundTag": "direct",
