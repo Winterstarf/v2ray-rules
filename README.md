@@ -52,22 +52,21 @@ If you do need them/custom ones, however (your app isn't one of the lucky few, i
 3. Click **Import rules from subscription url** and select **Append**.\
 If pasting from URL won't work, copy all .json contents from the raw link, and click **Import from clipboard**, then **Append**.
 
-### 3. Use presets
-1. In the lower center box of the app, select a routing preset
-2. Enable either **Tun Mode** (creates a TUNnel interface, works across whole system) or **System Proxy** (modifies system proxy settings, works in browsers only)
+### 4. Use presets
+1. In the lower center box of the app, select a routing preset.
+2. Enable either **Tun Mode** (creates a TUNnel interface, works across whole system) or **System Proxy** (modifies system proxy settings, works in browsers only).
 
 ## NyameBox
 
-### 1. Using default presets
-1. In **Routing** > **Downloads Profiles** choose whatever preset suits you.
-2. In the same **Routing** menu, after the preset is downloaded, select it.
-3. In **Settings** > **Tun Settings** enable **Tun Routing**.
+### 1. Download geofiles and default presets
+1. Open **Routing** > **Download Profiles**, select one of the presets for **Russia**.
+2. When geofiles and presets finish downloading, either use them or proceed below to import presets from this repo.
 
-### 2. Using custom presets
-1. In **Routing** > **Routing Settings** > **Route** click **New**.
-2. Set **Default outbound** to **Direct** if you've chosen "blocked_only", or to **Proxy** if other two profiles.
-3. In **Advanced** click on **Import JSON** and paste in the chosen .json profile.
-5. Select the profile in the **Routing** menu.
-6. In **Settings** > **Tun Settings** enable **Tun Routing**.
+### 2. Import presets
+1. Open **Routing** > **Edit Routing Profiles** > **Route**, click **New**.
+2. Set **Default outbound** to **Direct** if you chose the `blocked_only` preset, or **Proxy** elsewise.
+3. In **Advanced**, click on **Import JSON** and paste the .json contents of the chosen preset.
 
-Enable **Tun Mode** or **System Proxy**, preferably **Tun** if you plan on gaming and using Discord, and activate a profile by right clicking and selecting **Start**, and you're good to go.
+### 3. Use presets
+1. Open **Routing** and select a routing preset.
+2. Enable either **Tun Mode** (creates a TUNnel interface, works across whole system) or **System Proxy** (modifies system proxy settings, works in browsers only).
