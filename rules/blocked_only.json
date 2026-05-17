@@ -25,6 +25,14 @@
     "remarks": "Direct domains"
   },
   {
+    "outboundTag": "direct",
+    "ip": [
+      "geoip:private"
+    ],
+    "enabled": true,
+    "remarks": "Direct CIDRs"
+  },
+  {
     "outboundTag": "proxy",
     "domain": [
       "geosite:ru-blocked",
@@ -36,14 +44,6 @@
     ],
     "enabled": true,
     "remarks": "Proxy domains"
-  },
-  {
-    "outboundTag": "direct",
-    "ip": [
-      "geoip:private"
-    ],
-    "enabled": true,
-    "remarks": "Direct CIDRs"
   },
   {
     "outboundTag": "proxy",
