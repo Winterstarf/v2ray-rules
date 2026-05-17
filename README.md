@@ -39,47 +39,24 @@ If you do need them/custom ones, however (your app isn't one of the lucky few, i
 ## v2rayN
 
 ### 1. Download geofiles and default presets
-First, you must download the specific .dat files for the region.
-1. Open **Settings** > **Regional presets setting**.
-2. Select **Russia** from the list. This downloads the necessary `.dat` files.
-3. **Note:** This will create default profiles. You can use them, or proceed to the next steps to **overwrite/delete** them with my (or your) custom settings.
+1. Open **Settings** > **Regional presets setting**, select **Russia**.
+2. When geofiles and presets finish downloading, either use them or proceed below to import presets from this repo.
 
-### 2. Configure geofiles source (optional, but check if it's set correctly anyways)
+### 2. Configure geofiles source
 1. Open **Settings** > **Option Setting** > **v2rayN settings**.
-2. Locate the **Geo files source** dropdown.
-3. Select the `runetfreedom/russia-v2ray-rules-dat` option.
+2. In **Geo files source, sing-box ruleset files source, and Routing rules source** dropdowns, select `runetfreedom/russia-v2ray-rules-dat`.
 
-![Step 1: Geo Asset Configuration](https://raw.githubusercontent.com/Winterstarf/v2ray-rules/refs/heads/main/images/v2rayn_geofiles.png)
+### 3. Import presets
+1. Open **Settings** > **Routing Setting**.
+2. Click **Add** and fill boxes: **Remark** - any name, **Domain Strategy** - choose **IPOnDemand**, **URL** - paste the raw link of the chosen preset.
+3. Click **Import rules from subscription url** and select **Append**.\
+If pasting from URL won't work, copy all .json contents from the raw link, and click **Import from clipboard**, then **Append**.
 
-### 3. Import custom rules
-To use my specific profiles (overwriting the defaults if desired):
-1. Navigate to **Settings** > **Routing Setting**.
-2. Click **Add** to create a new profile (or double-click an existing one to overwrite it).
-3. **Remark:** Enter a name for the profile.
-4. **Domain Strategy:** Choose **IPOnDemand**.
-5. **URL:** Paste the raw link of one of the profiles above.
-6. Click **Import rules from subscription url**.
-7. Select **Append** if you've created a new profile, or **Replace** if you're editing a default preset.
+### 3. Use presets
+1. In the lower center box of the app, select a routing preset
+2. Enable either **Tun Mode** (creates a TUNnel interface, works across whole system) or **System Proxy** (modifies system proxy settings, works in browsers only)
 
-Alternatively, if pasting from URL won't work for you, you can always visit the page, copy all .json contents, and press **Import from clipboard**, then either **Append** or **Replace** as stated above.\
-Same thing goes for updating the rules.
-
-> ### Updating
-> When you need to update the rules to the latest version:
-> 1. Open your existing routing profile in **Routing Setting**.
-> 2. Click **Import rules from subscription url** again.
-> 3. When prompted, you **must select Replace** to overwrite old rules with the updated ones.
-
-![Step 2: Rule Import Process](https://raw.githubusercontent.com/Winterstarf/v2ray-rules/refs/heads/main/images/v2rayn_routing.png)
-
-### 4. Activate the Routing Profile
-1. On the main application window, look for the **Routing** dropdown menu at the bottom.
-2. Select the custom profile you just created/updated.
-3. Enable **Tun Mode** or **System Proxy** depending on your needs.
-
-![Step 3: Activating the Route](https://raw.githubusercontent.com/Winterstarf/v2ray-rules/refs/heads/main/images/v2rayn_modes.png)
-
-## Throne
+## NyameBox
 
 ### 1. Using default presets
 1. In **Routing** > **Downloads Profiles** choose whatever preset suits you.
