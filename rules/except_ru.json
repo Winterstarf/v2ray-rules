@@ -35,5 +35,11 @@
     ],
     "enabled": true,
     "remarks": "Direct CIDRs"
+  },
+  {
+    "outboundTag": "proxy",
+    "port": 0-65535,
+    "enabled": true,
+    "remarks": "Proxy else"
   }
 ]
