@@ -4,6 +4,13 @@
     "protocol": "dns"
   },
   {
+    "action": "reject",
+    "rule_set": [
+      "geosite-category-ads-all",
+      "geosite-win-spy"
+    ]
+  },
+  {
     "action": "route",
     "outbound": "direct",
     "protocol": "bittorrent"
@@ -14,13 +21,6 @@
     "rule_set": [
       "geosite-private",
       "geoip-private"
-    ]
-  },
-  {
-    "action": "reject",
-    "rule_set": [
-      "geosite-category-ads-all",
-      "geosite-win-spy"
     ]
   }
 ]
