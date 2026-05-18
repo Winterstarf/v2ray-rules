@@ -35,7 +35,7 @@
   {
     "outboundTag": "proxy",
     "ip": [
-      "geoip:telegram"
+      "geoip:ru-blocked"
     ],
     "enabled": true,
     "remarks": "Proxy CIDRs"
@@ -43,7 +43,6 @@
   {
     "outboundTag": "proxy",
     "domain": [
-      "geosite:ru-blocked",
       "geosite:discord",
       "geosite:telegram",
       "geosite:whatsapp",
