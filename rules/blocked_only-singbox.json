@@ -27,13 +27,12 @@
     "action": "route",
     "outbound": "proxy",
     "rule_set": [
-      "geosite-ru-blocked",
+      "geoip-ru-blocked",
       "geosite-discord",
       "geosite-telegram",
       "geosite-whatsapp",
       "geosite-google-gemini",
-      "geosite-roblox",
-      "geoip-telegram"
+      "geosite-roblox"
     ]
   }
 ]
