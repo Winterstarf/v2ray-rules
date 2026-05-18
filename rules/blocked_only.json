@@ -18,6 +18,14 @@
   },
   {
     "outboundTag": "direct",
+    "ip": [
+      "geoip:private"
+    ],
+    "enabled": true,
+    "remarks": "Direct CIDRs"
+  },
+  {
+    "outboundTag": "direct",
     "domain": [
       "geosite:private"
     ],
@@ -25,12 +33,12 @@
     "remarks": "Direct domains"
   },
   {
-    "outboundTag": "direct",
+    "outboundTag": "proxy",
     "ip": [
-      "geoip:private"
+      "geoip:telegram"
     ],
     "enabled": true,
-    "remarks": "Direct CIDRs"
+    "remarks": "Proxy CIDRs"
   },
   {
     "outboundTag": "proxy",
@@ -44,14 +52,6 @@
     ],
     "enabled": true,
     "remarks": "Proxy domains"
-  },
-  {
-    "outboundTag": "proxy",
-    "ip": [
-      "geoip:telegram"
-    ],
-    "enabled": true,
-    "remarks": "Proxy CIDRs"
   },
   {
     "outboundTag": "direct",
