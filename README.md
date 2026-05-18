@@ -54,7 +54,7 @@ If pasting from URL won't work, copy all .json contents from the raw link, and c
 
 ### 4. Use presets
 1. In the lower center box of the app, select a routing preset.
-2. Enable either **Tun Mode** (creates a TUNnel interface, works across whole system) or **System Proxy** (modifies system proxy settings, works in browsers only).
+2. Enable either **Tun Mode** (creates a TUNnel interface, works across whole system) or **System Proxy** (modifies system proxy settings, browsers/webapps only).
 
 ## NyameBox
 
@@ -69,4 +69,4 @@ If pasting from URL won't work, copy all .json contents from the raw link, and c
 
 ### 3. Use presets
 1. Open **Routing** and select a routing preset.
-2. Enable either **Tun Mode** (creates a TUNnel interface, works across whole system) or **System Proxy** (modifies system proxy settings, works in browsers only).
+2. Enable either **Tun Mode** (creates a TUNnel interface, works across whole system) or **System Proxy** (modifies system proxy settings, browsers/webapps only).
