@@ -18,17 +18,6 @@
   },
   {
     "outboundTag": "direct",
-    "domain": [
-      "geosite:private",
-      "geosite:category-ru",
-      "geosite:category-games",
-      "geosite:category-game-platforms-download"
-    ],
-    "enabled": true,
-    "remarks": "Direct domains"
-  },
-  {
-    "outboundTag": "direct",
     "ip": [
       "geoip:private",
       "geoip:ru"
@@ -36,6 +25,16 @@
     "enabled": true,
     "remarks": "Direct CIDRs"
   },
+  {
+    "outboundTag": "direct",
+    "domain": [
+      "geosite:private",
+      "geosite:category-games",
+      "geosite:category-game-platforms-download"
+    ],
+    "enabled": true,
+    "remarks": "Direct domains"
+  }
   {
     "outboundTag": "proxy",
     "port": 0-65535,
