@@ -19,12 +19,11 @@
     "action": "route",
     "outbound": "direct",
     "rule_set": [
-      "geosite-private",
       "geoip-private",
-      "geosite-category-ru",
+      "geoip-ru",
+      "geosite-private",
       "geosite-category-games",
       "geosite-category-game-platforms-download",
-      "geoip-ru"
     ]
   }
 ]
