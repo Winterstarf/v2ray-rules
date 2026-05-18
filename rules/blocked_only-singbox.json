@@ -19,8 +19,8 @@
     "action": "route",
     "outbound": "direct",
     "rule_set": [
-      "geosite-private",
-      "geoip-private"
+      "geoip-private",
+      "geosite-private"
     ]
   },
   {
