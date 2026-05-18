@@ -22,6 +22,7 @@
       "geoip-private",
       "geoip-ru",
       "geosite-private",
+      "geosite-category-ru",
       "geosite-category-games",
       "geosite-category-game-platforms-download",
     ]
