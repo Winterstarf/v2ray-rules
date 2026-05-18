@@ -18,19 +18,19 @@
   },
   {
     "outboundTag": "direct",
-    "domain": [
-      "geosite:private"
-    ],
-    "enabled": true,
-    "remarks": "Direct domains"
-  },
-  {
-    "outboundTag": "direct",
     "ip": [
       "geoip:private"
     ],
     "enabled": true,
     "remarks": "Direct CIDRs"
+  },
+  {
+    "outboundTag": "direct",
+    "domain": [
+      "geosite:private"
+    ],
+    "enabled": true,
+    "remarks": "Direct domains"
   },
   {
     "outboundTag": "proxy",
