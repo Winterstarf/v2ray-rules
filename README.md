@@ -12,7 +12,7 @@ Made based on .dat files from [v2fly](https://github.com/v2fly/domain-list-commu
 
 | Preset | Description
 | :--- | :--- 
-| **blocked_only** | Proxy only known blocked domains and CIDRs
+| **blocked_only** | Proxy only known blocked domains and CIDRs (requires [runetfreedom](https://github.com/runetfreedom/russia-v2ray-rules-dat) geofiles)
 | **except_ru** | Proxy all traffic except Russian domains and CIDRs
 | **all** | Proxy all traffic
 
