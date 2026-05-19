@@ -6,8 +6,7 @@
   {
     "action": "reject",
     "rule_set": [
-      "geosite-category-ads-all",
-      "geosite-win-spy"
+      "geosite-category-ads-all"
     ]
   },
   {
