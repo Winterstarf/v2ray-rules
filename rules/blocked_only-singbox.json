@@ -27,6 +27,7 @@
     "outbound": "proxy",
     "rule_set": [
       "geoip-ru-blocked",
+      "geosite-ru-blocked",
       "geosite-discord",
       "geosite-telegram",
       "geosite-whatsapp",
