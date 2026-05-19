@@ -42,6 +42,7 @@
   {
     "outboundTag": "proxy",
     "domain": [
+      "geosite:ru-blocked",
       "geosite:discord",
       "geosite:telegram",
       "geosite:whatsapp",
