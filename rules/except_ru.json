@@ -35,7 +35,7 @@
     ],
     "enabled": true,
     "remarks": "Direct domains"
-  }
+  },
   {
     "outboundTag": "proxy",
     "port": 0-65535,
