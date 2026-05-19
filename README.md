@@ -48,7 +48,7 @@ If you do need them/custom ones, however (your app isn't one of the lucky few, i
 
 ### 3. Import presets
 1. Open **Settings** > **Routing Setting**.
-2. Click **Add** and fill boxes: **Remark** - any name, **Domain Strategy** - choose **IPOnDemand**, **URL** - paste the raw link of the chosen preset.
+2. Click **Add** and fill boxes: **Remark** - any name, **Domain Strategy** - choose **IPIfNonMatch**, **URL** - paste the raw link of the chosen preset.
 3. Click **Import rules from subscription url** and select **Append**.\
 If pasting from URL won't work, copy all .json contents from the raw link, and click **Import from clipboard**, then **Append**.
 
