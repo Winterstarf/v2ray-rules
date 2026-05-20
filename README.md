@@ -56,7 +56,7 @@ If pasting from URL won't work, copy all .json contents from the raw link, and c
 1. In the lower center box of the app, select a routing preset.
 2. Enable either **Tun Mode** (creates a TUNnel interface, works across whole system) or **System Proxy** (modifies system proxy settings, browsers/webapps only).
 
-## NyameBox
+## NyameBox/Throne
 
 ### 1. Download geofiles and default presets
 1. Open **Routing** > **Download Profiles**, select one of the presets for **Russia**.
