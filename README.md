@@ -63,7 +63,7 @@ If pasting from URL won't work, copy all .json contents from the raw link, and c
 2. When geofiles and presets finish downloading, either use them or proceed below to import presets from this repo.
 
 ### 2. Import presets
-1. Open **Routing** > **Edit Routing Profiles** > **Route**, click **New**.
+1. Open **Routing** > **Edit Routing Profiles** > **DNS**, change **Direct DNS** to `77.88.8.8`, then go to **Route** and click **New**.
 2. Set **Default outbound** to **Direct** if you chose the `blocked_only` preset, or **Proxy** elsewise.
 3. In **Advanced**, click on **Import JSON** and paste the .json contents of the chosen preset.
 
