@@ -16,6 +16,14 @@
     "remarks": "Direct bittorrent"
   },
   {
+    "outboundTag": "proxy",
+    "domain": [
+      "geosite:roblox"
+    ],
+    "enabled": true,
+    "remarks": "Proxy domains"
+  },
+  {
     "outboundTag": "direct",
     "ip": [
       "geoip:private",
