@@ -18,7 +18,8 @@
   {
     "outboundTag": "proxy",
     "domain": [
-      "geosite:roblox"
+      "geosite:roblox",
+      "geosite:supercell"
     ],
     "enabled": true,
     "remarks": "Proxy domains"
