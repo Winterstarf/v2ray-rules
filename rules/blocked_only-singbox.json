@@ -32,7 +32,8 @@
       "geosite-telegram",
       "geosite-whatsapp",
       "geosite-google-gemini",
-      "geosite-roblox"
+      "geosite-roblox",
+      "geosite-supercell"
     ]
   }
 ]
