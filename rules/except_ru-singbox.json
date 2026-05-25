@@ -18,7 +18,8 @@
     "action": "route",
     "outbound": "proxy",
     "rule_set": [
-      "geosite-roblox"
+      "geosite-roblox",
+      "geosite-supercell"
     ]
   },
   {
