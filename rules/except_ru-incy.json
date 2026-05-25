@@ -1,0 +1,37 @@
+{
+  "Name": "except_ru",
+  "GlobalProxy": "true",
+  "RouteOrder": "block-proxy-direct",
+  "RemoteDNSType": "DoH",
+  "RemoteDNSDomain": "https://9.9.9.9/dns-query",
+  "RemoteDNSIP": "9.9.9.9",
+  "DomesticDNSType": "DoH",
+  "DomesticDNSDomain": "https://77.88.8.8/dns-query",
+  "DomesticDNSIP": "77.88.8.8",
+  "Geoipurl": "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat",
+  "Geositeurl": "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat",
+  "LastUpdated": "1779750737",
+  "DnsHosts": {},
+  "DirectSites": [
+    "geosite:private",
+    "geosite:category-ru",
+    "geosite:category-games",
+    "geosite:category-game-platforms-download"
+  ],
+  "DirectIp": [
+    "geoip:private",
+    "geoip:ru"
+  ],
+  "ProxySites": [
+    "geosite:roblox",
+    "geosite:supercell"
+  ],
+  "ProxyIp": [],
+  "BlockSites": [
+    "geosite:category-ads-all"
+  ],
+  "BlockIp": [],
+  "DomainStrategy": "IPIfNonMatch",
+  "FakeDNS": "false",
+  "UseChunkFiles": "true"
+}
