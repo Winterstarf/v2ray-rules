@@ -30,9 +30,7 @@ services:
       - /dev/shm:/dev/shm:rw
 
   remnawave-caddy: # caddy image with level4 module
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: livekit/caddyl4:v2.10.2
     container_name: remnawave-caddy
     hostname: remnawave-caddy
     network_mode: host
