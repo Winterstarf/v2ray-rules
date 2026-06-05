@@ -30,7 +30,7 @@ services:
       - /dev/shm:/dev/shm:rw
 
   remnawave-caddy: # standard caddy image
-    image: caddy:2.11.2-alpine
+    image: caddy:2.11.4-alpine
     container_name: remnawave-caddy
     hostname: remnawave-caddy
     network_mode: host
