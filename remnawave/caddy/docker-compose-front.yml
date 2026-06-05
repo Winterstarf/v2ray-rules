@@ -30,7 +30,7 @@ services:
       - /dev/shm:/dev/shm:rw
 
   remnawave-caddy: # caddy image with level4 module
-    image: livekit/caddyl4:v2.10.2
+    image: livekit/caddyl4:v2.11.3
     container_name: remnawave-caddy
     hostname: remnawave-caddy
     network_mode: host
