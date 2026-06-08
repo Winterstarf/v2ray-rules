@@ -37,6 +37,10 @@ services:
     <<: [*common, *logging]
     environment:
       - GOMEMLIMIT=500MiB
+    deploy:
+      resources:
+        limits:
+          memory: 600M
     volumes:
       - /opt/remnanode/webserver/Caddyfile:/etc/caddy/Caddyfile:ro
       - /opt/remnanode/webserver/certs:/etc/caddy/ssl:ro
