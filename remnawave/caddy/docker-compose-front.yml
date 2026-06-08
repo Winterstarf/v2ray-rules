@@ -40,7 +40,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 600M
+          memory: 600M # GOMEMLIMIT + 100MB
     volumes:
       - /opt/remnanode/webserver/Caddyfile:/etc/caddy/Caddyfile:ro
       - /opt/remnanode/webserver/certs:/etc/caddy/ssl:ro
