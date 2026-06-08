@@ -35,6 +35,8 @@ services:
     hostname: remnawave-caddy
     network_mode: host
     <<: [*common, *logging]
+    environment:
+      - GOMEMLIMIT=500MiB
     volumes:
       - /opt/remnanode/webserver/Caddyfile:/etc/caddy/Caddyfile:ro
       - /opt/remnanode/webserver/certs:/etc/caddy/ssl:ro
