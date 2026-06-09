@@ -9,7 +9,7 @@
 		protocols h1 h2 h2c
 	}
 
-	# Main website socket
+	# Listen to remote_ips of caddy.sock (main)
 	servers unix//dev/shm/caddy.sock {
 		listener_wrappers {
 			proxy_protocol
@@ -17,7 +17,7 @@
 		}
 	}
 
-	# Listen to remote_ips of 8443 (main) - change to this from caddy.sock
+	# Listen to remote_ips of 8443 (main) for http3
 	#servers 127.0.0.1:8443 {
 	#	listener_wrappers {
 	#		proxy_protocol {
