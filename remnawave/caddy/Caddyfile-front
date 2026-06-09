@@ -40,7 +40,6 @@
 	# Layer 4 Routing
 	layer4 {
 		:443 {
-			# Use 127.0.0.1:8443 if http3
 			# Route to main site/WS/xHTTP/gRPC
 			@main {
 				tls {
@@ -49,12 +48,14 @@
 				#remote_ip ip to restrict this route to that ip(s)
 			}
 			route @main {
-				proxy unix//dev/shm/caddy.sock {
+				proxy unix//dev/shm/caddy.sock { # 127.0.0.1:8443 for http3
 					proxy_protocol v2
 				}
 			}
 
-			# Route to Reality (self), add another subdomain and a route to route additional inbounds
+			# Routes to Reality (self)
+			# Each inbound needs own route and SNI
+
 			@self1 {
 				tls {
 					sni <NODE_DOMAIN2>
@@ -67,9 +68,9 @@
 				}
 			}
 
-			# Make sure to change foreign routes to not have duplicate domains (use subdomains if possible)
+			# Routes to Reality (foreign)
+			# Each inbound needs own route and SNI, multiple related subdomains can be used in one route
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign1 {
 				tls {
 					sni google.com
@@ -82,7 +83,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign2 {
 				tls {
 					sni microsoft.com
@@ -95,7 +95,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign3 {
 				tls {
 					sni apple.com
@@ -108,7 +107,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign4 {
 				tls {
 					sni amazon.com
@@ -121,7 +119,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign5 {
 				tls {
 					sni samsung.com
@@ -134,7 +131,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign6 {
 				tls {
 					sni drive.google.com
@@ -147,7 +143,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign7 {
 				tls {
 					sni support.microsoft.com
@@ -160,7 +155,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign8 {
 				tls {
 					sni support.apple.com
@@ -173,7 +167,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign9 {
 				tls {
 					sni aws.amazon.com
@@ -186,7 +179,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign10 {
 				tls {
 					sni support.samsung.com
@@ -199,7 +191,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign11 {
 				tls {
 					sni cloud.google.com
@@ -212,7 +203,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign12 {
 				tls {
 					sni azure.microsoft.com
@@ -225,7 +215,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign13 {
 				tls {
 					sni developer.apple.com
@@ -238,7 +227,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign14 {
 				tls {
 					sni music.amazon.com
@@ -251,7 +239,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign15 {
 				tls {
 					sni account.samsung.com
@@ -264,7 +251,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign16 {
 				tls {
 					sni play.google.com
@@ -277,7 +263,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign17 {
 				tls {
 					sni account.microsoft.com
@@ -290,7 +275,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign18 {
 				tls {
 					sni music.apple.com
@@ -303,7 +287,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign19 {
 				tls {
 					sni developer.amazon.com
@@ -316,7 +299,6 @@
 				}
 			}
 
-			# Route to Reality (foreign), only domains related to each other
 			@foreign20 {
 				tls {
 					sni developer.samsung.com
@@ -329,10 +311,9 @@
 				}
 			}
 
-			# Use 127.0.0.1:8443 if http3
 			# Fallback to main website
 			route {
-				proxy unix//dev/shm/caddy.sock {
+				proxy unix//dev/shm/caddy.sock { # 127.0.0.1:8443 for http3
 					proxy_protocol v2
 				}
 			}
@@ -350,6 +331,7 @@
 		#	proxy udp/127.0.0.1:8444
 		#}
 
+		# Fallback to main website
 		#route {
 		#	proxy udp/127.0.0.1:8443
 		#}
