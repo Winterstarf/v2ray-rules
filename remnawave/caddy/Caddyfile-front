@@ -27,7 +27,7 @@
 	#	}
 	#}
 
-	# Listen to remote_ips of 8444 (steal)
+	# Listen to remote_ips of 8444 (steal 1)
 	servers 127.0.0.1:8444 {
 		listener_wrappers {
 			proxy_protocol {
@@ -54,7 +54,7 @@
 			}
 
 			# Routes to Reality (self)
-			# Each inbound needs own route and SNI
+			# Each inbound needs own route and SNI (i.e. a steal server)
 
 			@self1 {
 				tls {
@@ -385,15 +385,14 @@ http://<NODE_DOMAIN>, http://<NODE_DOMAIN2> {
 	redir https://{host}{uri} permanent
 }
 
-# Main server (use :8443 if http3)
+# Main server (:8443 for http3)
 https://<NODE_DOMAIN>, https://<NODE_DOMAIN2> {
 	log {
 		output stdout
 		format json
 	}
 
-	# Use 127.0.0.1 if http3
-	bind unix//dev/shm/caddy.sock
+	bind unix//dev/shm/caddy.sock # 127.0.0.1 for http3
 
 	# Load local certs
 	tls /etc/caddy/ssl/fullchain.pem /etc/caddy/ssl/privkey.key
