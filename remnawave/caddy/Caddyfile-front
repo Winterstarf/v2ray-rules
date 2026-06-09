@@ -48,7 +48,8 @@
 				#remote_ip ip to restrict this route to that ip(s)
 			}
 			route @main {
-				proxy unix//dev/shm/caddy.sock { # 127.0.0.1:8443 for http3
+				# 127.0.0.1:8443 for http3
+				proxy unix//dev/shm/caddy.sock {
 					proxy_protocol v2
 				}
 			}
@@ -313,7 +314,8 @@
 
 			# Fallback to main website
 			route {
-				proxy unix//dev/shm/caddy.sock { # 127.0.0.1:8443 for http3
+				# 127.0.0.1:8443 for http3
+				proxy unix//dev/shm/caddy.sock {
 					proxy_protocol v2
 				}
 			}
@@ -392,7 +394,8 @@ https://<NODE_DOMAIN>, https://<NODE_DOMAIN2> {
 		format json
 	}
 
-	bind unix//dev/shm/caddy.sock # 127.0.0.1 for http3
+	# 127.0.0.1 for http3
+	bind unix//dev/shm/caddy.sock
 
 	# Load local certs
 	tls /etc/caddy/ssl/fullchain.pem /etc/caddy/ssl/privkey.key
