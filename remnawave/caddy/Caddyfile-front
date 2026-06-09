@@ -37,7 +37,7 @@
 		}
 	}
 
-	# Layer 4 Routing
+	# Layer 4 routes
 	layer4 {
 		:443 {
 			# Route to main site/WS/xHTTP/gRPC
