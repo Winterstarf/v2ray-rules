@@ -1,4 +1,6 @@
 {
+	skip_install_trust
+
 	log {
 		output stderr
 		format json
@@ -27,15 +29,23 @@
 	#	}
 	#}
 
-	# Listen to remote_ips of 8444 (steal 1)
-	servers 127.0.0.1:8444 {
+	# Listen to remote_ips of caddy-steal1.sock (steal 1)
+	servers unix//dev/shm/caddy-steal1.sock {
 		listener_wrappers {
-			proxy_protocol {
-				allow 127.0.0.1/32 ::/128
-			}
+			proxy_protocol
 			tls
 		}
 	}
+
+	# Listen to remote_ips of 8444 (steal 1) for http3
+	#servers 127.0.0.1:8444 {
+	#	listener_wrappers {
+	#		proxy_protocol {
+	#			allow 127.0.0.1/32 ::/128
+	#		}
+	#		tls
+	#	}
+	#}
 
 	# Layer 4 routes
 	layer4 {
@@ -387,7 +397,7 @@ http://<NODE_DOMAIN>, http://<NODE_DOMAIN2> {
 	redir https://{host}{uri} permanent
 }
 
-# Main server (:8443 for http3)
+# Main server (add :8443 for http3)
 https://<NODE_DOMAIN>, https://<NODE_DOMAIN2> {
 	log {
 		output stdout
@@ -434,14 +444,14 @@ https://<NODE_DOMAIN>, https://<NODE_DOMAIN2> {
 	import common_site
 }
 
-# Selfsteal server 1
-:8444 {
+# Selfsteal server 1 (just :8444 for http3)
+https://caddy-steal1.internal {
 	log {
 		output stdout
 		format json
 	}
 
-	bind 127.0.0.1
+	bind unix//dev/shm/caddy-steal1.sock
 
 	# Load local certs
 	tls /etc/caddy/ssl/fullchain.pem /etc/caddy/ssl/privkey.key
