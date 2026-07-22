@@ -1,0 +1,8 @@
+FROM caddy:2.11.4-builder-alpine AS builder
+RUN xcaddy build --with github.com/mholt/caddy-l4
+
+FROM caddy:2.11.4-alpine
+COPY --from=builder /usr/bin/caddy /usr/bin/caddy
+
+ENTRYPOINT ["/bin/sh", "-c"]
+CMD ["rm -f /dev/shm/caddy* /dev/shm/xr* && exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile"]
