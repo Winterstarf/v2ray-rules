@@ -1,0 +1,468 @@
+{
+	skip_install_trust
+
+	log {
+		output stderr
+		format json
+	}
+
+	# Add h3 for http3
+	servers {
+		protocols h1 h2 h2c
+	}
+
+	# Listen to remote_ips of caddy.sock (main)
+	servers unix//dev/shm/caddy.sock {
+		listener_wrappers {
+			proxy_protocol
+			tls
+		}
+	}
+
+	# Listen to remote_ips of 8443 (main) for http3
+	#servers 127.0.0.1:8443 {
+	#	listener_wrappers {
+	#		proxy_protocol {
+	#			allow 127.0.0.1/32 ::/128
+	#		}
+	#		tls
+	#	}
+	#}
+
+	# Listen to remote_ips of caddy-steal1.sock (steal 1)
+	servers unix//dev/shm/caddy-steal1.sock {
+		listener_wrappers {
+			proxy_protocol
+			tls
+		}
+	}
+
+	# Listen to remote_ips of 8444 (steal 1) for http3
+	#servers 127.0.0.1:8444 {
+	#	listener_wrappers {
+	#		proxy_protocol {
+	#			allow 127.0.0.1/32 ::/128
+	#		}
+	#		tls
+	#	}
+	#}
+
+	# Layer 4 routes
+	layer4 {
+		:443 {
+			# Route to main site/WS/xHTTP/gRPC
+			@main {
+				tls {
+					sni <NODE_DOMAIN>
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @main {
+				# 127.0.0.1:8443 for http3
+				proxy unix//dev/shm/caddy.sock {
+					proxy_protocol v2
+				}
+			}
+
+			# Routes to Reality (self)
+			# Each inbound needs own route and SNI (i.e. a steal server)
+
+			@self1 {
+				tls {
+					sni <NODE_DOMAIN2>
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @self1 {
+				proxy unix//dev/shm/xr-vtcr-s1.sock {
+					proxy_protocol v2
+				}
+			}
+
+			# Routes to Reality (foreign)
+			# Each inbound needs own route and SNI, multiple related subdomains can be used in one route
+
+			@foreign1 {
+				tls {
+					sni google.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign1 {
+				proxy unix//dev/shm/xr-vtcr-f1.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign2 {
+				tls {
+					sni microsoft.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign2 {
+				proxy unix//dev/shm/xr-vtcr-f2.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign3 {
+				tls {
+					sni apple.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign3 {
+				proxy unix//dev/shm/xr-vtcr-f3.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign4 {
+				tls {
+					sni amazon.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign4 {
+				proxy unix//dev/shm/xr-vtcr-f4.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign5 {
+				tls {
+					sni samsung.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign5 {
+				proxy unix//dev/shm/xr-vtcr-f5.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign6 {
+				tls {
+					sni drive.google.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign6 {
+				proxy unix//dev/shm/xr-vxhr-f1.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign7 {
+				tls {
+					sni support.microsoft.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign7 {
+				proxy unix//dev/shm/xr-vxhr-f2.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign8 {
+				tls {
+					sni support.apple.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign8 {
+				proxy unix//dev/shm/xr-vxhr-f3.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign9 {
+				tls {
+					sni aws.amazon.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign9 {
+				proxy unix//dev/shm/xr-vxhr-f4.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign10 {
+				tls {
+					sni support.samsung.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign10 {
+				proxy unix//dev/shm/xr-vxhr-f5.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign11 {
+				tls {
+					sni cloud.google.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign11 {
+				proxy unix//dev/shm/xr-vwsr-f1.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign12 {
+				tls {
+					sni azure.microsoft.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign12 {
+				proxy unix//dev/shm/xr-vwsr-f2.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign13 {
+				tls {
+					sni developer.apple.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign13 {
+				proxy unix//dev/shm/xr-vwsr-f3.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign14 {
+				tls {
+					sni music.amazon.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign14 {
+				proxy unix//dev/shm/xr-vwsr-f4.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign15 {
+				tls {
+					sni account.samsung.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign15 {
+				proxy unix//dev/shm/xr-vwsr-f5.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign16 {
+				tls {
+					sni play.google.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign16 {
+				proxy unix//dev/shm/xr-vgrr-f1.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign17 {
+				tls {
+					sni account.microsoft.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign17 {
+				proxy unix//dev/shm/xr-vgrr-f2.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign18 {
+				tls {
+					sni music.apple.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign18 {
+				proxy unix//dev/shm/xr-vgrr-f3.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign19 {
+				tls {
+					sni developer.amazon.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign19 {
+				proxy unix//dev/shm/xr-vgrr-f4.sock {
+					proxy_protocol v2
+				}
+			}
+
+			@foreign20 {
+				tls {
+					sni developer.samsung.com
+				}
+				#remote_ip ip to restrict this route to that ip(s)
+			}
+			route @foreign20 {
+				proxy unix//dev/shm/xr-vgrr-f5.sock {
+					proxy_protocol v2
+				}
+			}
+
+			# Fallback to main website
+			route {
+				# 127.0.0.1:8443 for http3
+				proxy unix//dev/shm/caddy.sock {
+					proxy_protocol v2
+				}
+			}
+		}
+
+		# Uncomment for http3
+		#udp/:443 {
+		#@h3_main quic sni <NODE_DOMAIN>
+		#route @h3_main {
+		#	proxy udp/127.0.0.1:8443
+		#}
+
+		#@h3_self1 quic sni <NODE_DOMAIN2>
+		#route @h3_self1 {
+		#	proxy udp/127.0.0.1:8444
+		#}
+
+		# Fallback to main website
+		#route {
+		#	proxy udp/127.0.0.1:8443
+		#}
+		#}
+	}
+}
+
+# shared logic
+(common_site) {
+	root * /var/www/html
+	file_server
+
+	encode zstd gzip
+
+	# Uncomment for http3
+	#header Alt-Svc `h3=":443"; ma=2592000`
+
+	header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+	header X-Content-Type-Options "nosniff"
+	header X-Frame-Options "SAMEORIGIN"
+	header X-Robots-Tag "noindex, nofollow, noarchive, nosnippet, noimageindex"
+
+	@blocked {
+		path_regexp (?i)(^\.\./|\.(env|git|htaccess|ssh|asp|php|aspx|sql|bak|config|yaml|yml|ini|log)$|/(wp-admin|wp-login|phpmyadmin|admin|backup|config|db|setup|shell|api/v1/user/config)|/(uploads|temp|tmp|scripts|bin|etc|var|usr)/.*\.sh$)
+	}
+	handle @blocked {
+		abort
+	}
+
+	handle /manifest.json {
+		header Content-Type "application/manifest+json"
+		file_server
+	}
+
+	@assets {
+		path *.css *.js *.png *.jpg *.jpeg *.gif *.ico *.svg *.woff2 *.mp4 *.webm
+	}
+	handle @assets {
+		header Cache-Control "public, max-age=2592000"
+		file_server
+	}
+}
+
+# Redirect HTTP
+http://<NODE_DOMAIN>, http://<NODE_DOMAIN2> {
+	log {
+		output stdout
+		format json
+	}
+
+	redir https://{host}{uri} permanent
+}
+
+# Main server (add :8443 for http3)
+https://<NODE_DOMAIN>, https://<NODE_DOMAIN2> {
+	log {
+		output stdout
+		format json
+	}
+
+	# 127.0.0.1 for http3
+	bind unix//dev/shm/caddy.sock
+
+	# Load local certs
+	tls /etc/caddy/ssl/fullchain.pem /etc/caddy/ssl/privkey.key
+
+	# xHTTP v1
+	reverse_proxy /api/v1/network/XzTfN6LEnn7wWDJww* unix//dev/shm/xr-vxht.sock {
+		transport http {
+			versions h2c 2
+		}
+		flush_interval -1
+		header_up X-Real-IP {client_ip}
+		header_up -Via
+	}
+
+	# WebSocket v1
+	reverse_proxy /api/v1/network/WPkUXTWEmMtrTtAm5* unix//dev/shm/xr-vwst.sock {
+		flush_interval -1
+		header_up X-Real-IP {client_ip}
+		header_up -Via
+	}
+
+	# gRPC v1
+	@grpc {
+		protocol grpc
+		path /apiRequestInteractionService/*
+	}
+	reverse_proxy @grpc unix//dev/shm/xr-vgrt.sock {
+		transport http {
+			versions h2c 2
+		}
+		flush_interval -1
+		header_up X-Real-IP {client_ip}
+		header_up -Via
+	}
+
+	import common_site
+}
+
+# Selfsteal server 1 (just :8444 for http3)
+https://caddy-steal1.internal {
+	log {
+		output stdout
+		format json
+	}
+
+	# 127.0.0.1 for http3
+	bind unix//dev/shm/caddy-steal1.sock
+
+	# Load local certs
+	tls /etc/caddy/ssl/fullchain.pem /etc/caddy/ssl/privkey.key
+
+	@self host <NODE_DOMAIN2>
+	handle @self {
+		import common_site
+	}
+
+	handle {
+		import common_site
+	}
+}
