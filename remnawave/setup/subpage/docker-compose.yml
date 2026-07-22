@@ -1,0 +1,52 @@
+x-common: &common
+  ulimits:
+    nofile:
+      soft: 1048576
+      hard: 1048576
+  restart: always
+  networks:
+    - remnawave-network
+
+x-logging: &logging
+  logging:
+    driver: json-file
+    options:
+      max-size: 100m
+      max-file: 5
+
+x-env: &env
+  env_file: .env
+
+services:
+  remnawave-subscription-page:
+    image: remnawave/subscription-page:7.2.6
+    container_name: remnawave-subscription-page
+    hostname: remnawave-subscription-page
+    <<: [*common, *logging, *env]
+    ports:
+      - '127.0.0.1:3010:3010'
+    networks:
+      - remnawave-network
+
+  remnawave-nginx:
+    image: nginx:1.28
+    container_name: remnawave-nginx
+    hostname: remnawave-nginx
+    <<: [*common, *logging]
+    volumes:
+      - /opt/remnawave/webserver/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /opt/remnawave/webserver/certs/fullchain.pem:/etc/nginx/ssl/fullchain.pem:ro
+      - /opt/remnawave/webserver/certs/privkey.key:/etc/nginx/ssl/privkey.key:ro
+      - /opt/remnawave/webserver/filedump:/var/www/filedump:ro
+    ports:
+      - '443:443/tcp'
+      - '443:443/udp'
+      - '80:80/tcp'
+    depends_on:
+      - remnawave-subscription-page
+
+networks:
+  remnawave-network:
+    name: remnawave-network
+    driver: bridge
+    external: true
