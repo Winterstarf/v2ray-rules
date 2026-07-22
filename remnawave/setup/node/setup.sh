@@ -135,8 +135,8 @@ if [ "$SERVER_CHOICE" -eq "1" ]; then
     # Caddy in front of Xray
     print_info "Dropping configs..."
 
-    curl -sSL "https://raw.githubusercontent.com/Winterstarf/v2ray-rules/refs/heads/main/remnawave/caddy/docker-compose-front.yml" -o "$BASE_DIR/docker-compose.yml"
-    curl -sSL "https://raw.githubusercontent.com/Winterstarf/v2ray-rules/refs/heads/main/remnawave/caddy/Caddyfile-front" -o "$WEB_DIR/Caddyfile"
+    curl -sSL "https://raw.githubusercontent.com/Winterstarf/v2ray-rules/refs/heads/main/remnawave/setup/node/caddy/docker-compose-front.yml" -o "$BASE_DIR/docker-compose.yml"
+    curl -sSL "https://raw.githubusercontent.com/Winterstarf/v2ray-rules/refs/heads/main/remnawave/setup/node/caddy/Caddyfile-front" -o "$WEB_DIR/Caddyfile"
 
     sed -i "s|<NODE_DOMAIN>|$NODE_DOMAIN|g" "$WEB_DIR/Caddyfile"
     sed -i "s|<NODE_DOMAIN2>|$NODE_DOMAIN2|g" "$WEB_DIR/Caddyfile"
@@ -149,8 +149,8 @@ elif [ "$SERVER_CHOICE" -eq "2" ]; then
     # Caddy behind Xray
     print_info "Dropping configs..."
 
-    curl -sSL "https://raw.githubusercontent.com/Winterstarf/v2ray-rules/refs/heads/main/remnawave/caddy/docker-compose-back.yml" -o "$BASE_DIR/docker-compose.yml"
-    curl -sSL "https://raw.githubusercontent.com/Winterstarf/v2ray-rules/refs/heads/main/remnawave/caddy/Caddyfile-back" -o "$WEB_DIR/Caddyfile"
+    curl -sSL "https://raw.githubusercontent.com/Winterstarf/v2ray-rules/refs/heads/main/remnawave/setup/node/caddy/docker-compose-back.yml" -o "$BASE_DIR/docker-compose.yml"
+    curl -sSL "https://raw.githubusercontent.com/Winterstarf/v2ray-rules/refs/heads/main/remnawave/setup/node/caddy/Caddyfile-back" -o "$WEB_DIR/Caddyfile"
 
     sed -i "s|<NODE_DOMAIN>|$NODE_DOMAIN|g" "$WEB_DIR/Caddyfile"
     sed -i "s|<NODE_DOMAIN2>|$NODE_DOMAIN2|g" "$WEB_DIR/Caddyfile"
