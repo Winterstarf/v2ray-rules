@@ -6,6 +6,7 @@ apt install -y ufw btop tmux curl git nano cron logrotate rsyslog sudo fail2ban
 2:
 sed -i -e 's/^#\?Port .*/Port 1337/' -e 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config && systemctl restart ssh
 find /etc/ssh/sshd_config.d/ -type f -name "*.conf" -exec sed -i -e 's/^#\?Port .*/Port 1337/' -e 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' {} +
+ufw allow 1337 comment 'SSH (non-standard)' && ufw allow 80 comment 'HTTP' && ufw allow 443 comment 'HTTPS' && ufw enable && ufw reload
 
 3:
 >> nano /etc/sysctl.d/99-custom-node.conf
@@ -14,12 +15,10 @@ find /etc/ssh/sshd_config.d/ -type f -name "*.conf" -exec sed -i -e 's/^#\?Port 
 sysctl --system
 
 4:
-[manual]: use forward.sh with 80/tcp, 443/tcp, 443/udp; delete forward.sh
+use forward.sh to forward 80/tcp, 443/tcp, 443/udp
+point this server ip to subdomain(s) of dest server if using selfsteal inbounds
 
 5:
-[manual]: point server ip to subdomain(s) of dest server only for selfsteal inbounds
-
-6:
 >> nano /etc/quic-mtuc.nft
 add table ip QuicMtuClamp
 flush table ip QuicMtuClamp
@@ -50,7 +49,7 @@ WantedBy=multi-user.target
 systemctl daemon-reload
 systemctl enable --now quic-mtuc.service
 
-7:
+6:
 fallocate -l 2G /swapfile
 [dd if=/dev/zero of=/swapfile bs=1M count=2048 status=progress] - if previous fails
 
@@ -62,25 +61,7 @@ grep "/swapfile" /etc/fstab
 free -h
 swapon --show
 
-8:
-[only for relay on reg.ru]: add this right below initial comments, but before filter block
->> nano /etc/ufw/before.rules
-*mangle
-:PREROUTING ACCEPT [0:0]
-:INPUT ACCEPT [0:0]
-:FORWARD ACCEPT [0:0]
-:OUTPUT ACCEPT[0:0]
-:POSTROUTING ACCEPT [0:0]
--A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
-
-COMMIT
->>
-ufw reload
-
->> nano /etc/hosts (append to bottom)
-127.0.0.1   localhost hostname.domain hostname
-
-9:
+7:
 >> nano /etc/fail2ban/jail.local
 [DEFAULT]
 backend = systemd
@@ -92,7 +73,7 @@ systemctl restart fail2ban
 fail2ban-client status
 fail2ban-client status sshd
 
-10:
+8:
 curl -fsSL https://raw.githubusercontent.com/Winterstarf/traffic-guard/refs/heads/master/install.sh | bash
 traffic-guard full \
   -u https://raw.githubusercontent.com/Winterstarf/traffic-guard-lists/refs/heads/main/public/antiscanner.list \
