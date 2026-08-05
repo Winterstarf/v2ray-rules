@@ -1,4 +1,5 @@
 [antizapret]
+install antizapret from GubernievS/AntiZapret-VPN before doing these steps
 
 1:
 apt install -y btop tmux curl git nano cron logrotate rsyslog sudo fail2ban
