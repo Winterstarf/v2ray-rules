@@ -14,20 +14,25 @@ struct:
 /opt/remnawave/webserver/get_certs.sh
 
 4:
+create a new pubkey or use an existing one from setup/node/setup.sh
+use get_certs.sh to either issue a new wildcard cert or use an existing one
+add sync_certs.sh to bash source, and push wildcard cert to nodes
+
+5:
 sed -i -e 's/^#\?Port .*/Port 1337/' -e 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config && systemctl restart ssh
 find /etc/ssh/sshd_config.d/ -type f -name "*.conf" -exec sed -i -e 's/^#\?Port .*/Port 1337/' -e 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' {} +
 ufw allow 1337 comment 'SSH (non-standard)' && ufw allow 80 comment 'HTTP' && ufw allow 443 comment 'HTTPS' && ufw enable && ufw reload
 
-5:
+6:
 >> nano /etc/sysctl.d/99-custom.conf
 99-custom.conf
 >>
 sysctl --system
 
-6:
+7:
 systemctl enable docker docker.service containerd.service
 
-7:
+8:
 >> nano /etc/fail2ban/jail.local
 [DEFAULT]
 backend = systemd
@@ -39,7 +44,7 @@ systemctl restart fail2ban
 fail2ban-client status
 fail2ban-client status sshd
 
-8:
+9:
 curl -fsSL https://raw.githubusercontent.com/Winterstarf/traffic-guard/refs/heads/master/install.sh | bash
 traffic-guard full \
   -u https://raw.githubusercontent.com/Winterstarf/traffic-guard-lists/refs/heads/main/public/antiscanner.list \
