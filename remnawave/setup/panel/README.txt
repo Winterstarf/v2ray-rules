@@ -29,6 +29,11 @@ sysctl --system
 systemctl enable docker docker.service containerd.service
 
 7:
+create a new pubkey or use an existing one from setup/node/setup.sh
+use get_certs.sh to either issue a new wildcard cert or use an existing one
+add sync_certs.sh to bash source, and push wildcard cert to nodes
+
+8:
 >> nano /etc/fail2ban/jail.local
 [DEFAULT]
 backend = systemd
@@ -40,7 +45,7 @@ systemctl restart fail2ban
 fail2ban-client status
 fail2ban-client status sshd
 
-8:
+9:
 curl -fsSL https://raw.githubusercontent.com/Winterstarf/traffic-guard/refs/heads/master/install.sh | bash
 traffic-guard full \
   -u https://raw.githubusercontent.com/Winterstarf/traffic-guard-lists/refs/heads/main/public/antiscanner.list \
@@ -49,8 +54,3 @@ traffic-guard full \
   -u https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level2.netset \
   -u https://lists.blocklist.de/lists/all.txt \
   --enable-logging
-
-9:
-create a new pubkey or use an existing one from setup/node/setup.sh
-use get_certs.sh to either issue a new wildcard cert or use an existing one
-add sync_certs.sh to bash source, and push wildcard cert to nodes
