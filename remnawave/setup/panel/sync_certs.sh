@@ -18,7 +18,7 @@ print_info() {
     echo -e "${YELLOW}[i]${NC} $1"
 }
 
-NODES=("1.1.1.1" "2.2.2.2" "3.3.3.3")
+NODES=("<ip>" "<ip>" "<ip>" "<ip>" "<ip>")
 SSH_PORT=1337
 
 CERT_DIR="/opt/remnanode/webserver/certs"
