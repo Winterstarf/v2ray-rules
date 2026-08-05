@@ -15,10 +15,6 @@ ufw allow 1337 comment 'SSH (non-standard)' && ufw allow 80 comment 'HTTP' && uf
 sysctl --system
 
 4:
-use forward.sh to forward 80/tcp, 443/tcp, 443/udp
-point this server ip to subdomain(s) of dest server if using selfsteal inbounds
-
-5:
 >> nano /etc/quic-mtuc.nft
 add table ip QuicMtuClamp
 flush table ip QuicMtuClamp
@@ -49,7 +45,7 @@ WantedBy=multi-user.target
 systemctl daemon-reload
 systemctl enable --now quic-mtuc.service
 
-6:
+5:
 fallocate -l 2G /swapfile
 [dd if=/dev/zero of=/swapfile bs=1M count=2048 status=progress] - if previous fails
 
@@ -60,6 +56,10 @@ grep "/swapfile" /etc/fstab
 
 free -h
 swapon --show
+
+6:
+use forward.sh to forward 80/tcp, 443/tcp, 443/udp
+point this server ip to subdomain(s) of dest server if using selfsteal inbounds
 
 7:
 >> nano /etc/fail2ban/jail.local
