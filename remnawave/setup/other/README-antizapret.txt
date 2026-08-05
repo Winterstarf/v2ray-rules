@@ -2,7 +2,7 @@
 install antizapret from GubernievS/AntiZapret-VPN before doing these steps
 
 1:
-apt install -y btop tmux curl git nano cron logrotate rsyslog sudo fail2ban
+apt install -y ufw btop tmux curl git nano cron logrotate rsyslog sudo fail2ban
 
 2:
 sed -i -e 's/^#\?Port .*/Port 1337/' -e 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config && systemctl restart ssh
