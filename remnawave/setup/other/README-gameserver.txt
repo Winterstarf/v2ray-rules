@@ -6,7 +6,7 @@ apt install -y ufw btop tmux curl git nano cron logrotate rsyslog sudo fail2ban
 2:
 sed -i -e 's/^#\?Port .*/Port 1337/' -e 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config && systemctl restart ssh
 find /etc/ssh/sshd_config.d/ -type f -name "*.conf" -exec sed -i -e 's/^#\?Port .*/Port 1337/' -e 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' {} +
-[manual]: open needed game port(s) in ufw
+ufw allow 1337 comment 'SSH (non-standard)' && ufw allow 80 comment 'HTTP' && ufw allow 443 comment 'HTTPS' && ufw allow <needed_port> comment '<game>' && ufw enable && ufw reload
 
 3:
 >> nano /etc/sysctl.d/99-custom-gameserver.conf
