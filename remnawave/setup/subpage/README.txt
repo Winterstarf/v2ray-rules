@@ -8,12 +8,11 @@ curl -fsSL https://get.docker.com | sh
 
 3:
 mkdir -p /opt/remnawave/webserver/certs
-[
+struct:
 /opt/remnawave/.env
 /opt/remnawave/docker-compose.yml
 /opt/remnawave/webserver/nginx.conf
 /opt/remnawave/webserver/get_certs.sh
-]
 
 4:
 sed -i -e 's/^#\?Port .*/Port 1337/' -e 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config && systemctl restart ssh
@@ -30,7 +29,7 @@ sysctl --system
 systemctl enable docker docker.service containerd.service
 
 7:
-[manual]: add subpage ip to panel nginx.conf
+add subpage ip to allowed ips in panel nginx.conf
 
 8:
 >> nano /etc/fail2ban/jail.local
