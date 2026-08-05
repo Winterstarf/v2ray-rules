@@ -9,6 +9,7 @@ curl -fsSL https://get.docker.com | sh
 3:
 mkdir -p /opt/remnawave/webserver/certs
 struct:
+/opt/remnawave/.env
 /opt/remnawave/docker-compose.yml
 /opt/remnawave/webserver/nginx.conf
 /opt/remnawave/webserver/get_certs.sh
