@@ -109,7 +109,7 @@ fi
 # 1. PACKAGES
 # ------------------------------------------------------------------------------
 print_info "[Task 1] Installing Docker and required packages..."
-apt-get update && apt-get install -y ufw btop tmux curl git nano cron logrotate rsyslog rsync nftables fail2ban
+apt-get update && apt-get install -y ufw btop tmux curl git nano cron logrotate rsyslog sudo fail2ban nftables rsync
 
 if ! command -v docker &> /dev/null; then
     curl -fsSL https://get.docker.com | sh
