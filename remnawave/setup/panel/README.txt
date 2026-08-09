@@ -7,7 +7,7 @@ apt install -y ufw btop tmux curl git nano cron logrotate rsyslog sudo fail2ban
 curl -fsSL https://get.docker.com | sh
 
 3:
-mkdir -p /opt/remnawave/webserver/certs
+mkdir -p /opt/remnawave/webserver/wildcard
 struct:
 /opt/remnawave/.env
 /opt/remnawave/docker-compose.yml
