@@ -1,7 +1,7 @@
 [remnawave-subpage]
 
 1:
-apt install -y ufw btop tmux curl git nano cron logrotate rsyslog sudo fail2ban
+apt install -y ufw btop tmux curl git nano cron logrotate rsyslog sudo fail2ban rsync
 
 2:
 curl -fsSL https://get.docker.com | sh
