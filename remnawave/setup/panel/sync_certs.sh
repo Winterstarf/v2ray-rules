@@ -18,27 +18,81 @@ print_info() {
     echo -e "${YELLOW}[i]${NC} $1"
 }
 
-NODES=("<ip>" "<ip>" "<ip>" "<ip>" "<ip>")
 SSH_PORT=1337
-
-CERT_DIR="/opt/remnanode/webserver/certs"
-
+TIMEOUT=3
 LOCAL_CERT="/opt/remnawave/webserver/wildcard/fullchain.pem"
 LOCAL_KEY="/opt/remnawave/webserver/wildcard/privkey.key"
 
+NODES=("<node_ip_1>" "<node_ip_2>" "<node_ip_3>")
+SUBSERVER="<subserver_ip>"
+
+NODE_DIR="/opt/remnanode/webserver/certs"
+SUBSERVER_DIR="/opt/remnawave/webserver/certs"
+
+# Reload commands
+CADDY_RELOAD="docker exec remnawave-caddy caddy reload --config /etc/caddy/Caddyfile"
+NGINX_RELOAD="docker exec remnawave-nginx nginx -s reload"
+
+check_ssh() {
+    local IP="$1"
+    ssh -q -p $SSH_PORT \
+        -o ConnectTimeout=$TIMEOUT \
+        -o BatchMode=yes \
+        -o StrictHostKeyChecking=accept-new \
+        "root@$IP" "true" 2>/dev/null
+}
+
+sync_node() {
+    local IP="$1"
+    local CERT_DIR="$2"
+    local RELOAD_CMD="$3"
+
+    print_info "Checking reachability for $IP..."
+
+    if ! check_ssh "$IP"; then
+        print_error "Node $IP is unreachable or SSH auth failed (timeout: ${TIMEOUT}s), skipping"
+        return 1
+    fi
+
+    print_info "Pushing new certs to $IP ($CERT_DIR)..."
+
+    if rsync -avz -e "ssh -p $SSH_PORT -o StrictHostKeyChecking=accept-new" "$LOCAL_CERT" "$LOCAL_KEY" "root@$IP:$CERT_DIR/"; then
+        if ssh -p $SSH_PORT -o StrictHostKeyChecking=accept-new "root@$IP" "$RELOAD_CMD"; then
+            print_status "Done updating $IP"
+        else
+            print_error "Failed to reload webserver on $IP"
+        fi
+    else
+        print_error "Failed to rsync certs to $IP"
+    fi
+}
+
 if [ -n "$1" ]; then
-    TARGET_NODES=("$1")
-    print_info "Single target: $1"
-else
-    TARGET_NODES=("${NODES[@]}")
-    print_info "Updating all nodes"
+    TARGET="$1"
+    print_info "Single target mode: $TARGET"
+
+    if [ -n "$SUBSERVER" ] && [ "$TARGET" == "$SUBSERVER" ]; then
+        sync_node "$TARGET" "$SUBSERVER_DIR" "$NGINX_RELOAD"
+        exit 0
+    fi
+
+    for IP in "${NODES[@]}"; do
+        if [ "$IP" == "$TARGET" ]; then
+            sync_node "$TARGET" "$NODE_DIR" "$CADDY_RELOAD"
+            exit 0
+        fi
+    done
+
+    print_error "Target IP $TARGET not found in node list"
+    exit 1
 fi
 
-for IP in "${TARGET_NODES[@]}"; do
-    print_info "Pushing new certs to $IP..."
+print_info "Updating all nodes..."
 
-    rsync -avz -e "ssh -p $SSH_PORT -o StrictHostKeyChecking=accept-new" "$LOCAL_CERT" "$LOCAL_KEY" root@$IP:$CERT_DIR/
-    ssh -p $SSH_PORT -o StrictHostKeyChecking=accept-new root@$IP "docker exec remnawave-caddy caddy reload --config /etc/caddy/Caddyfile"
-
-    print_status "Done updating $IP"
+for IP in "${NODES[@]}"; do
+    [ -n "$IP" ] && sync_node "$IP" "$NODE_DIR" "$CADDY_RELOAD"
 done
+
+if [ -n "$SUBSERVER" ]; then
+    sync_node "$SUBSERVER" "$SUBSERVER_DIR" "$NGINX_RELOAD"
+fi
