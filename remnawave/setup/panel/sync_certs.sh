@@ -23,8 +23,8 @@ SSH_PORT=1337
 
 CERT_DIR="/opt/remnanode/webserver/certs"
 
-LOCAL_CERT="/opt/remnawave/wildcard/fullchain.pem"
-LOCAL_KEY="/opt/remnawave/wildcard/privkey.key"
+LOCAL_CERT="/opt/remnawave/webserver/wildcard/fullchain.pem"
+LOCAL_KEY="/opt/remnawave/webserver/wildcard/privkey.key"
 
 if [ -n "$1" ]; then
     TARGET_NODES=("$1")
