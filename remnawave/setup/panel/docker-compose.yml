@@ -19,10 +19,12 @@ x-env: &env
 
 services:
   remnawave:
-    image: remnawave/backend:2.8.1
+    image: remnawave/backend:3.2.1
     container_name: remnawave
     hostname: remnawave
     <<: [*common, *logging, *env]
+    volumes:
+      - valkey-socket:/var/run/valkey
     ports:
       - 127.0.0.1:3000:${APP_PORT:-3000}
       - 127.0.0.1:3001:${METRICS_PORT:-3001}
@@ -42,6 +44,7 @@ services:
     image: postgres:17.6
     container_name: remnawave-db
     hostname: remnawave-db
+    shm_size: 512mb
     <<: [*common, *logging, *env]
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
@@ -63,27 +66,32 @@ services:
     container_name: remnawave-redis
     hostname: remnawave-redis
     <<: [*common, *logging]
+    volumes:
+      - valkey-socket:/var/run/valkey
     command: >
       valkey-server
       --save ""
       --appendonly no
       --maxmemory-policy noeviction
       --loglevel warning
+      --unixsocket /var/run/valkey/valkey.sock
+      --unixsocketperm 777
+      --port 0
     healthcheck:
-      test: ['CMD', 'valkey-cli', 'ping']
+      test: ['CMD', 'valkey-cli', '-s', '/var/run/valkey/valkey.sock', 'ping']
       interval: 3s
       timeout: 3s
       retries: 3
 
   remnawave-nginx:
-    image: nginx:1.28
+    image: nginx:1.31.3
     container_name: remnawave-nginx
     hostname: remnawave-nginx
     <<: [*common, *logging]
     volumes:
       - /opt/remnawave/webserver/nginx.conf:/etc/nginx/nginx.conf:ro
-      - /opt/remnawave/webserver/certs/fullchain.pem:/etc/nginx/ssl/fullchain.pem:ro
-      - /opt/remnawave/webserver/certs/privkey.key:/etc/nginx/ssl/privkey.key:ro
+      - /opt/remnawave/webserver/wildcard/fullchain.pem:/etc/nginx/ssl/fullchain.pem:ro
+      - /opt/remnawave/webserver/wildcard/privkey.key:/etc/nginx/ssl/privkey.key:ro
     ports:
       - '443:443/tcp'
       - '443:443/udp'
@@ -95,9 +103,14 @@ networks:
   remnawave-network:
     name: remnawave-network
     driver: bridge
+    external: false
 
 volumes:
   remnawave-db-data:
     name: remnawave-db-data
+    driver: local
+    external: false
+  valkey-socket:
+    name: valkey-socket
     driver: local
     external: false
