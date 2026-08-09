@@ -12,6 +12,7 @@ struct:
 /opt/remnawave/.env
 /opt/remnawave/docker-compose.yml
 /opt/remnawave/webserver/nginx.conf
+/opt/remnawave/webserver/filedump (for files)
 
 4:
 sed -i -e 's/^#\?Port .*/Port 1337/' -e 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config && systemctl restart ssh
