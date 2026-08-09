@@ -12,7 +12,6 @@ struct:
 /opt/remnawave/.env
 /opt/remnawave/docker-compose.yml
 /opt/remnawave/webserver/nginx.conf
-/opt/remnawave/webserver/get_certs.sh
 
 4:
 sed -i -e 's/^#\?Port .*/Port 1337/' -e 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config && systemctl restart ssh
@@ -30,7 +29,7 @@ systemctl enable docker docker.service containerd.service
 
 7:
 create a new pubkey or use an existing one from setup/node/setup.sh
-use get_certs.sh to either issue a new wildcard cert or use an existing one
+use acme.sh to either issue a new wildcard cert or use an existing one
 add sync_certs.sh to bash source, and push wildcard cert to nodes
 
 8:
