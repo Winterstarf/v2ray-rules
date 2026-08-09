@@ -12,7 +12,6 @@ struct:
 /opt/remnawave/.env
 /opt/remnawave/docker-compose.yml
 /opt/remnawave/webserver/nginx.conf
-/opt/remnawave/webserver/get_certs.sh
 
 4:
 sed -i -e 's/^#\?Port .*/Port 1337/' -e 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config && systemctl restart ssh
@@ -30,6 +29,7 @@ systemctl enable docker docker.service containerd.service
 
 7:
 add subpage ip to allowed ips in panel nginx.conf
+use acme.sh to either issue a new cert or use the wildcard from panel (via adding the ip to sync_certs.sh)
 
 8:
 >> nano /etc/fail2ban/jail.local
