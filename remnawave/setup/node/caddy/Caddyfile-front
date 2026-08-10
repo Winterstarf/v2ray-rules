@@ -391,7 +391,8 @@
 # Redirect HTTP
 http://<NODE_DOMAIN>, http://<NODE_DOMAIN2> {
 	log {
-		output stdout
+		output stderr
+		level ERROR
 		format json
 	}
 
@@ -401,7 +402,8 @@ http://<NODE_DOMAIN>, http://<NODE_DOMAIN2> {
 # Main server (add :8443 for http3)
 https://<NODE_DOMAIN>, https://<NODE_DOMAIN2> {
 	log {
-		output stdout
+		output stderr
+		level ERROR
 		format json
 	}
 
@@ -448,7 +450,8 @@ https://<NODE_DOMAIN>, https://<NODE_DOMAIN2> {
 # Selfsteal server 1 (just :8444 for http3)
 https://caddy-steal1.internal {
 	log {
-		output stdout
+		output stderr
+		level ERROR
 		format json
 	}
 
