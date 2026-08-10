@@ -54,7 +54,8 @@
 # Redirect HTTP
 http://<NODE_DOMAIN> {
 	log {
-		output stdout
+		output stderr
+		level ERROR
 		format json
 	}
 
@@ -64,7 +65,8 @@ http://<NODE_DOMAIN> {
 # Main server
 https://<NODE_DOMAIN> {
 	log {
-		output stdout
+		output stderr
+		level ERROR
 		format json
 	}
 
