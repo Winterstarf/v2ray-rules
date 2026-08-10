@@ -33,13 +33,22 @@ SUBSERVER_DIR="/opt/remnawave/webserver/certs"
 CADDY_RELOAD="docker exec remnawave-caddy caddy reload --config /etc/caddy/Caddyfile"
 NGINX_RELOAD="docker exec remnawave-nginx nginx -s reload"
 
+SSH_OPTS="-p $SSH_PORT -o StrictHostKeyChecking=accept-new -o BatchMode=yes"
+
+clear_old_host_key() {
+    local IP="$1"
+    ssh-keygen -R "[$IP]:$SSH_PORT" >/dev/null 2>&1
+}
+
 check_ssh() {
     local IP="$1"
-    ssh -q -p $SSH_PORT \
-        -o ConnectTimeout=$TIMEOUT \
-        -o BatchMode=yes \
-        -o StrictHostKeyChecking=accept-new \
-        "root@$IP" "true" 2>/dev/null
+
+    if ssh -q $SSH_OPTS -o ConnectTimeout=$TIMEOUT "root@$IP" "true" 2>/dev/null; then
+        return 0
+    fi
+
+    clear_old_host_key "$IP"
+    ssh -q $SSH_OPTS -o ConnectTimeout=$TIMEOUT "root@$IP" "true" 2>/dev/null
 }
 
 sync_node() {
@@ -56,8 +65,8 @@ sync_node() {
 
     print_info "Pushing new certs to $IP ($CERT_DIR)..."
 
-    if rsync -avz -e "ssh -p $SSH_PORT -o StrictHostKeyChecking=accept-new" "$LOCAL_CERT" "$LOCAL_KEY" "root@$IP:$CERT_DIR/"; then
-        if ssh -p $SSH_PORT -o StrictHostKeyChecking=accept-new "root@$IP" "$RELOAD_CMD"; then
+    if rsync -avz -e "ssh $SSH_OPTS" "$LOCAL_CERT" "$LOCAL_KEY" "root@$IP:$CERT_DIR/"; then
+        if ssh $SSH_OPTS "root@$IP" "$RELOAD_CMD"; then
             print_status "Done updating $IP"
         else
             print_error "Failed to reload webserver on $IP"
