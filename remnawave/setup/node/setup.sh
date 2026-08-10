@@ -86,7 +86,11 @@ if [ -z "$NODE_DOMAIN2" ]; then
 fi
 
 if [[ "$SERVER_CHOICE" == "1" || "$SERVER_CHOICE" == "2" ]]; then
-    TOTAL_RAM_MB=$(free -m | awk '/^Mem:/{print $2}')
+    TOTAL_RAM_MB=$(awk '/MemTotal/ {print int($2/1024)}' /proc/meminfo 2>/dev/null)
+    if [ -z "$TOTAL_RAM_MB" ] || ! [[ "$TOTAL_RAM_MB" =~ ^[0-9]+$ ]]; then
+        echo -ne "${YELLOW}[i]${NC} Could not calculate RAM, enter total RAM in MiB (e.g. 2048): "
+        read TOTAL_RAM_MB
+    fi
     print_info "Available RAM: ${TOTAL_RAM_MB}MiB"
 
     # CADDY_MEM is for GOMEMLIMIT (75% of CADDY_HARD_MEM), CADDY_HARD_MEM is for Docker memory limit
