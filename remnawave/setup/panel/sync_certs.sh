@@ -23,8 +23,8 @@ TIMEOUT=3
 LOCAL_CERT="/opt/remnawave/webserver/wildcard/fullchain.pem"
 LOCAL_KEY="/opt/remnawave/webserver/wildcard/privkey.key"
 
-NODES=("<node_ip_1>" "<node_ip_2>" "<node_ip_3>")
-SUBSERVER="<subserver_ip>"
+NODES=("<NODE_IP1>" "<NODE_IP2>" "<NODE_IP3>")
+SUBSERVER="<SUBPAGE_IP>"
 
 NODE_DIR="/opt/remnanode/webserver/certs"
 SUBSERVER_DIR="/opt/remnawave/webserver/certs"
