@@ -137,7 +137,7 @@ mkdir -p "$BASE_DIR"/warp
 mkdir -p "$WEB_DIR"/{certs,website}
 
 # --- .ENV ---
-cat << 'EOF' > "$BASE_DIR/.env"
+cat << EOF > "$BASE_DIR/.env"
 NODE_PORT=$PANEL_PORT
 XTLS_API_PORT=61000
 SECRET_KEY=$SECRET_KEY
