@@ -3,6 +3,7 @@
 
 	log {
 		output stderr
+		level ERROR
 		format json
 	}
 
