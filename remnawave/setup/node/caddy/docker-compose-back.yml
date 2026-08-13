@@ -17,7 +17,7 @@ x-env: &env
 
 services:
   remnanode:
-    image: remnawave/node:3.1.1
+    image: remnawave/node:3.2.0
     container_name: remnanode
     hostname: remnanode
     network_mode: host
