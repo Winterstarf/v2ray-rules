@@ -53,3 +53,6 @@ traffic-guard full \
   -u https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level2.netset \
   -u https://lists.blocklist.de/lists/all.txt \
   --enable-logging
+
+10:
+install remnabot (all info on its repo)
