@@ -6,6 +6,7 @@ x-common: &common
   restart: always
   networks:
     - remnawave-network
+    - bot-network
 
 x-logging: &logging
   logging:
@@ -25,8 +26,6 @@ services:
     <<: [*common, *logging, *env]
     ports:
       - '127.0.0.1:3010:3010'
-    networks:
-      - remnawave-network
 
   remnawave-nginx:
     image: nginx:1.31.3
@@ -50,3 +49,6 @@ networks:
     name: remnawave-network
     driver: bridge
     external: false
+  bot-network:
+    name: remnawave-bot-network
+    external: true
