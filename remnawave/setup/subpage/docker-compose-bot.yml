@@ -1,0 +1,110 @@
+x-common: &common
+  ulimits:
+    nofile:
+      soft: 1048576
+      hard: 1048576
+  restart: always
+  networks:
+    - bot-network
+
+x-logging: &logging
+  logging:
+    driver: json-file
+    options:
+      max-size: 100m
+      max-file: 5
+
+x-env: &env
+  env_file: .env
+
+services:
+  postgres:
+    image: postgres:17.6
+    container_name: remnawave-bot-db
+    hostname: remnawave-bot-db
+    <<: [*common, *logging, *env]
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-remnawave_bot}
+      POSTGRES_USER: ${POSTGRES_USER:-remnawave_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secure_password_123}
+      POSTGRES_INITDB_ARGS: '--encoding=UTF8 --locale=C'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-remnawave_user} -d ${POSTGRES_DB:-remnawave_bot}']
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  redis:
+    image: redis:8.10
+    container_name: remnawave-bot-redis
+    hostname: remnawave-bot-redis
+    <<: [*common, *logging]
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  bot:
+    build: .
+    container_name: remnawave-bot
+    hostname: remnawave-bot
+    <<: [*common, *logging, *env]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      FORCE_COLOR: '1'
+      DOCKER_ENV: 'true'
+      DATABASE_MODE: 'auto'
+      POSTGRES_HOST: 'postgres'
+      POSTGRES_PORT: '5432'
+      POSTGRES_DB: '${POSTGRES_DB:-remnawave_bot}'
+      POSTGRES_USER: '${POSTGRES_USER:-remnawave_user}'
+      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:-secure_password_123}'
+      REDIS_URL: 'redis://redis:6379/0'
+      TZ: 'Europe/Moscow'
+      LOCALES_PATH: '${LOCALES_PATH:-/app/locales}'
+    volumes:
+      - ./logs:/app/logs:rw
+      - ./data:/app/data:rw
+      - ./locales:/app/locales:rw
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ./uploads:/app/uploads:rw
+      - ./vpn_logo.png:/app/vpn_logo.png:ro
+    ports:
+      - '${WEB_API_PORT:-8080}:8080'
+    healthcheck:
+      test: ['CMD-SHELL', 'python -c "import requests, os; requests.get(''http://localhost:8080/health'', headers={''X-API-Key'': os.environ.get(''WEB_API_DEFAULT_TOKEN'')}, timeout=5) or exit(1)"']
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  postgres-data:
+    name: postgres-data
+    driver: local
+  redis-data:
+    name: redis-data
+    driver: local
+
+networks:
+  bot-network:
+    name: remnawave-bot-network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
+    driver_opts:
+      com.docker.network.driver.mtu: 1350
