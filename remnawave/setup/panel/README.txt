@@ -28,11 +28,23 @@ sysctl --system
 systemctl enable docker docker.service containerd.service
 
 7:
+fallocate -l 2G /swapfile
+[dd if=/dev/zero of=/swapfile bs=1M count=2048 status=progress] - if previous fails
+
+chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
+
+grep "/swapfile" /etc/fstab
+[echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab] - if previous returns nothing
+
+free -h
+swapon --show
+
+8:
 create a new pubkey or use an existing one from setup/node/setup.sh
 use acme.sh to either issue a new wildcard cert or use an existing one
 add sync_certs.sh to bash source, and push wildcard cert to nodes
 
-8:
+9:
 >> nano /etc/fail2ban/jail.local
 [DEFAULT]
 backend = systemd
@@ -44,7 +56,7 @@ systemctl restart fail2ban
 fail2ban-client status
 fail2ban-client status sshd
 
-9:
+10:
 curl -fsSL https://raw.githubusercontent.com/Winterstarf/traffic-guard/refs/heads/master/install.sh | bash
 traffic-guard full \
   -u https://raw.githubusercontent.com/Winterstarf/traffic-guard-lists/refs/heads/main/public/antiscanner.list \
