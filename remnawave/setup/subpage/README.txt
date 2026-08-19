@@ -29,10 +29,22 @@ sysctl --system
 systemctl enable docker docker.service containerd.service
 
 7:
+fallocate -l 2G /swapfile
+[dd if=/dev/zero of=/swapfile bs=1M count=2048 status=progress] - if previous fails
+
+chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
+
+grep "/swapfile" /etc/fstab
+[echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab] - if previous returns nothing
+
+free -h
+swapon --show
+
+8:
 add subpage ip to allowed ips in panel nginx.conf
 use acme.sh to either issue a new cert or use the wildcard from panel (via adding the ip to sync_certs.sh)
 
-8:
+9:
 >> nano /etc/fail2ban/jail.local
 [DEFAULT]
 backend = systemd
@@ -44,7 +56,7 @@ systemctl restart fail2ban
 fail2ban-client status
 fail2ban-client status sshd
 
-9:
+10:
 curl -fsSL https://raw.githubusercontent.com/Winterstarf/traffic-guard/refs/heads/master/install.sh | bash
 traffic-guard full \
   -u https://raw.githubusercontent.com/Winterstarf/traffic-guard-lists/refs/heads/main/public/antiscanner.list \
@@ -54,5 +66,5 @@ traffic-guard full \
   -u https://lists.blocklist.de/lists/all.txt \
   --enable-logging
 
-10:
+11:
 install remnabot (all info on its repo)
