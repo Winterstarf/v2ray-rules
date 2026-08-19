@@ -19,7 +19,7 @@ x-env: &env
 
 services:
   remnawave:
-    image: remnawave/backend:3.2.3
+    image: remnawave/backend:3.3.0
     container_name: remnawave
     hostname: remnawave
     <<: [*common, *logging, *env]
