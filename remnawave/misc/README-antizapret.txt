@@ -1,4 +1,4 @@
-[antizapret]
+[antizapret/az-fwd]
 install antizapret from GubernievS/AntiZapret-VPN before doing these steps
 
 1:
