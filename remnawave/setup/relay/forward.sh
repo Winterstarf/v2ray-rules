@@ -33,7 +33,7 @@ show_help() {
 UFW Port Forwarding
 
 Usage:
-  $script_name [OPTIONS] -i <interface> -p <protocol> -d <dest_port> -t <dest_ip> [-s <src_port>]
+  $script_name [OPTIONS] -i <interface> -p <protocol> -d <dest_port> -t <dest_ip> [-s <src_port>] [-H |-hysteria]
 
 OPTIONS:
   -i  Source interface (e.g., eth0) [Required]
@@ -41,6 +41,7 @@ OPTIONS:
   -d  Destination port [Required]
   -t  Destination IP [Required]
   -s  Source port (defaults to dest_port)
+  -H, -hysteria  Enable UDP port hopping (20000:50000 -> dest_ip:dest_port)
   -r  Remove the rule instead of adding it
   -h  Show this help message
 
@@ -119,11 +120,19 @@ add_nat_rules() {
 
     local exact_prerouting="-A PREROUTING -i ${SRC_IFACE} -p ${PROTOCOL} --dport ${s_port} -j DNAT --to-destination ${DEST_IP}:${DEST_PORT}"
     local exact_postrouting="-A POSTROUTING -p ${PROTOCOL} -d ${DEST_IP} --dport ${DEST_PORT} -j MASQUERADE"
+    local hop_prerouting="-A PREROUTING -i ${SRC_IFACE} -p udp --dport 20000:50000 -j DNAT --to-destination ${DEST_IP}:${DEST_PORT}"
 
     print_info "Adding NAT rules to before.rules..."
 
     if grep -qF -- "${exact_prerouting}" "${rules_file}"; then
         print_info "NAT rule for ${PROTOCOL} ${SRC_IFACE}:${s_port} -> ${DEST_IP}:${DEST_PORT} already exists"
+
+        # Add port hopping rule if flag was set and rule is missing
+        if [[ $HOPPING_MODE -eq 1 ]] && ! grep -qF -- "${hop_prerouting}" "${rules_file}"; then
+            sed -i "/^\*nat/,/COMMIT/ { s|^COMMIT|${hop_prerouting}\nCOMMIT| }" "${rules_file}"
+            print_status "Added UDP port hopping rule (20000:50000)"
+        fi
+
         # Heal accidentally deleted MASQUERADE rules if PREROUTING exists
         if ! grep -qF -- "${exact_postrouting}" "${rules_file}"; then
             local tmp_file
@@ -166,6 +175,11 @@ add_nat_rules() {
         exit 1
     fi
 
+    local extra_hop_line=""
+    if [[ $HOPPING_MODE -eq 1 ]]; then
+        extra_hop_line="${hop_prerouting}"
+    fi
+
     # Append block if entirely missing
     if ! grep -q "^\*nat" "${rules_file}"; then
         cat <<EOF >> "${rules_file}"
@@ -174,6 +188,7 @@ add_nat_rules() {
 :PREROUTING ACCEPT [0:0]
 :POSTROUTING ACCEPT [0:0]
 ${exact_prerouting}
+${extra_hop_line}
 ${exact_postrouting}
 
 COMMIT
@@ -187,12 +202,13 @@ EOF
 
         local tmp_file
         tmp_file=$(mktemp)
-        awk -v pre="${exact_prerouting}" -v post="${post_rule}" '
+        awk -v pre="${exact_prerouting}" -v hop="${extra_hop_line}" -v post="${post_rule}" '
         /^\*nat/ { in_nat=1 }
         in_nat && /^[[:space:]]*$/ { empty_line=1; next }
         in_nat && empty_line && !/^COMMIT$/ { print ""; empty_line=0 }
         in_nat && /^COMMIT$/ {
             print pre
+            if (hop != "") print hop
             if (post != "") print post
             print ""
             print "COMMIT"
@@ -227,15 +243,22 @@ remove_rule_logic() {
 
     local exact_prerouting="-A PREROUTING -i ${SRC_IFACE} -p ${PROTOCOL} --dport ${s_port} -j DNAT --to-destination ${DEST_IP}:${DEST_PORT}"
     local exact_postrouting="-A POSTROUTING -p ${PROTOCOL} -d ${DEST_IP} --dport ${DEST_PORT} -j MASQUERADE"
+    local hop_prerouting="-A PREROUTING -i ${SRC_IFACE} -p udp --dport 20000:50000 -j DNAT --to-destination ${DEST_IP}:${DEST_PORT}"
 
     print_info "Removing configuration for ${PROTOCOL} ${SRC_IFACE}:${s_port} -> ${DEST_IP}:${DEST_PORT}..."
 
-    # Literal deletion prevents messing up files with manual edits
+    # Remove standard PREROUTING rule
     if grep -qF -- "${exact_prerouting}" "${rules_file}"; then
         delete_exact_line "${rules_file}" "${exact_prerouting}"
         print_status "Removed PREROUTING rules"
     else
         print_info "PREROUTING rules not found in before.rules, skipping"
+    fi
+
+    # Remove port hopping PREROUTING rule if present
+    if grep -qF -- "${hop_prerouting}" "${rules_file}"; then
+        delete_exact_line "${rules_file}" "${hop_prerouting}"
+        print_status "Removed UDP port hopping PREROUTING rule (20000:50000)"
     fi
 
     # DO NOT delete MASQUERADE rule if other forwards currently depend on it
@@ -263,8 +286,18 @@ DEST_PORT=""
 DEST_IP=""
 SRC_PORT=""
 REMOVE_MODE=0
+HOPPING_MODE=0
 
-while getopts "i:p:d:t:s:rh" opt; do
+ARGS=()
+for arg in "$@"; do
+    case "$arg" in
+        -hysteria|--hysteria) ARGS+=("-H") ;;
+        *) ARGS+=("$arg") ;;
+    esac
+done
+set -- "${ARGS[@]}"
+
+while getopts "i:p:d:t:s:rHh" opt; do
     case $opt in
         i) SRC_IFACE="$OPTARG" ;;
         p) PROTOCOL="$OPTARG" ;;
@@ -272,6 +305,7 @@ while getopts "i:p:d:t:s:rh" opt; do
         t) DEST_IP="$OPTARG" ;;
         s) SRC_PORT="$OPTARG" ;;
         r) REMOVE_MODE=1 ;;
+        H) HOPPING_MODE=1 ;;
         h) show_help; exit 0 ;;
         \?) print_error "Unknown option"; echo ""; show_help; exit 1 ;;
     esac
