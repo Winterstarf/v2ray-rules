@@ -480,6 +480,7 @@ add_ufw_porthop() {
 :PREROUTING ACCEPT [0:0]
 :POSTROUTING ACCEPT [0:0]
 $rule
+
 COMMIT
 EOF
     fi
