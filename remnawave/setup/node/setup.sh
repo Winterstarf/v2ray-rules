@@ -426,31 +426,43 @@ CREATE_SWAP=0
 if ! swapon --show | grep -q "NAME"; then
     CREATE_SWAP=1
 else
-    read -p "Swapfile exists, overwrite it with a new 2GB swapfile? [y/n]: " response
+    read -p "Swap exists, overwrite it with a 2GB one? [y/n]: " response
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
         CREATE_SWAP=1
-        swapoff /swapfile 2>/dev/null || true
+        ACTIVE_SWAPS=$(swapon --show=NAME --noheadings)
+        
+        swapoff -a 2>/dev/null || true
+        for dev in $ACTIVE_SWAPS; do
+            if [ -f "$dev" ]; then
+                rm -f "$dev"
+            elif [ -b "$dev" ]; then
+                # Clean header signature
+                wipefs -a "$dev" 2>/dev/null || true
+            fi
+        done
+        
+        sed -i.bak '/\bswap\b/d' /etc/fstab
     else
         print_status "Swapfile creation cancelled, skipping"
     fi
 fi
 
 if [ "$CREATE_SWAP" -eq 1 ]; then
-    # Create file via fallocate, fallback to dd if filesystem rejects fallocate
+    # Create swapfile via fallocate, fallback to dd if filesystem rejects fallocate (e.g., btrfs/zfs)
     fallocate -l 2G /swapfile || dd if=/dev/zero of=/swapfile bs=1M count=2048 status=none
     chmod 600 /swapfile
+    
     mkswap /swapfile >/dev/null 2>&1
     swapon /swapfile
 
-    # Ensure it's added to fstab for reboots
-    if ! grep -q "/swapfile" /etc/fstab; then
+    if ! grep -q "^/swapfile" /etc/fstab; then
         echo '/swapfile none swap sw 0 0' >> /etc/fstab
     fi
-    print_status "Created and enabled a 2GB swapfile"
+    print_status "Created a 2GB swapfile"
 fi
 
 touch "$LOCKFILE"
-echo ""
+echo "(^人^)"
 print_status "Setup complete"
 print_info "Add node IP to sync_certs.sh on ${PANEL_IP} server, start the container stack, and connect the node on ${PANEL_PORT} port"
 print_info "If needed, review and edit Caddyfile/nginx.conf manually"
