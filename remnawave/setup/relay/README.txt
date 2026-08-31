@@ -58,7 +58,7 @@ free -h
 swapon --show
 
 6:
-use forward.sh to forward 80/tcp, 443/tcp, 443/udp
+use forward.sh to forward 80/tcp, 443/tcp, 443/udp, and then porthop ranges with -hysteria flag
 point this server ip to subdomain(s) of dest server if using selfsteal inbounds
 
 7:
