@@ -449,53 +449,7 @@ if [ "$CREATE_SWAP" -eq 1 ]; then
     print_status "Created and enabled a 2GB swapfile"
 fi
 
-# ------------------------------------------------------------------------------
-# 12. PORT HOPPING
-# ------------------------------------------------------------------------------
-print_info "[Task 12] Configuring port hopping..."
-
-DEFAULT_IF=$(ip -4 route show default | awk '/default/ {print $5}' | head -n1)
-DEFAULT_IF=${DEFAULT_IF:-eth0}
-
-add_ufw_porthop() {
-    local rules_file="$1"
-    local iface="$2"
-    local rule="-A PREROUTING -i $iface -p udp --dport 20000:50000 -j REDIRECT --to-ports 443"
-
-    if [ ! -f "$rules_file" ]; then
-        return
-    fi
-
-    if grep -q "20000:50000.*REDIRECT --to-ports 443" "$rules_file"; then
-        print_status "Port hop rule already present in $rules_file"
-        return
-    fi
-
-    if grep -q "^\*nat" "$rules_file"; then
-        sed -i "/^\*nat/,/COMMIT/ { s/^COMMIT/$rule\nCOMMIT/ }" "$rules_file"
-    else
-        cat <<EOF >> "$rules_file"
-
-*nat
-:PREROUTING ACCEPT [0:0]
-:POSTROUTING ACCEPT [0:0]
-$rule
-
-COMMIT
-EOF
-    fi
-    print_status "Added port hop rule to $rules_file"
-}
-
-add_ufw_porthop "/etc/ufw/before.rules" "$DEFAULT_IF"
-add_ufw_porthop "/etc/ufw/before6.rules" "$DEFAULT_IF"
-
-print_info "Reloading UFW..."
-ufw reload
-
 touch "$LOCKFILE"
-echo ""
-echo ""
 echo ""
 print_status "Setup complete"
 print_info "Add node IP to sync_certs.sh on ${PANEL_IP} server, start the container stack, and connect the node on ${PANEL_PORT} port"
