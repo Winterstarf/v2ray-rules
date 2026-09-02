@@ -96,22 +96,26 @@ if [[ "$SERVER_CHOICE" == "1" || "$SERVER_CHOICE" == "2" ]]; then
     # CADDY_MEM is for GOMEMLIMIT (75% of CADDY_HARD_MEM), CADDY_HARD_MEM is for Docker memory limit
     if [ "$TOTAL_RAM_MB" -lt 1200 ]; then
         # 1GB
-        CADDY_MEM=170
-        CADDY_HARD_MEM=230
+        CADDY_MEM=150
+        CADDY_HARD_MEM=200
     elif [ "$TOTAL_RAM_MB" -lt 2300 ]; then
         # 2GB
-        CADDY_MEM=600
-        CADDY_HARD_MEM=800
-    elif [ "$TOTAL_RAM_MB" -lt 5700 ]; then
+        CADDY_MEM=525
+        CADDY_HARD_MEM=700
+    elif [ "$TOTAL_RAM_MB" -lt 4300 ]; then
         # 4GB
+        CADDY_MEM=1125
+        CADDY_HARD_MEM=1500
+    elif [ "$TOTAL_RAM_MB" -lt 5700 ]; then
+        # 6GB
         CADDY_MEM=1500
         CADDY_HARD_MEM=2000
-    elif [ "$TOTAL_RAM_MB" -lt 7800 ]; then
-        # 6GB
+    elif [ "$TOTAL_RAM_MB" -lt 7700 ]; then
+        # 8GB
         CADDY_MEM=2250
         CADDY_HARD_MEM=3000
     else
-        # 8GB+
+        # 10GB+
         CADDY_MEM=3000
         CADDY_HARD_MEM=4000
     fi
