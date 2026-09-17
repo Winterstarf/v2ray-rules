@@ -359,6 +359,8 @@
 	root * /var/www/html
 	file_server
 
+	templates
+
 	encode zstd gzip
 
 	# Uncomment for http3
