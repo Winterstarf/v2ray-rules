@@ -1,6 +1,8 @@
 {
 	skip_install_trust
 
+	default_sni <NODE_DOMAIN>
+
 	log {
 		output stderr
 		level ERROR
@@ -389,7 +391,7 @@
 }
 
 # Redirect HTTP
-http://<NODE_DOMAIN>, http://<NODE_DOMAIN2> {
+http:// {
 	log {
 		output stderr
 		level ERROR
@@ -469,4 +471,20 @@ https://caddy-steal1.internal {
 	handle {
 		import common_site
 	}
+}
+
+# Catch-all for active probes (direct IP or unrecognized SNI)
+https:// {
+        log {
+                output stderr
+                level ERROR
+                format json
+        }
+
+        bind unix//dev/shm/caddy.sock
+
+        # Load local certs
+        tls /etc/caddy/ssl/fullchain.pem /etc/caddy/ssl/privkey.key
+
+        import common_site
 }
