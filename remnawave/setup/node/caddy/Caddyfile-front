@@ -364,7 +364,7 @@
 	encode zstd gzip
 
 	# Uncomment for http3
-	#header Alt-Svc `h3=":443"; ma=2592000`
+	header Alt-Svc `h3=":443"; ma=2592000`
 
 	header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 	header X-Content-Type-Options "nosniff"
