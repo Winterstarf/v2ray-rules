@@ -27,6 +27,7 @@ services:
     volumes:
       - /var/log/remnanode:/var/log/remnanode:rw
       - /opt/remnanode/webserver/certs:/usr/local/share/xray/certs:ro
+      - /opt/remnanode/webserver/website:/var/www/html:ro
       - /dev/shm:/dev/shm:rw
 
   remnawave-caddy: # caddy image with level4 module
