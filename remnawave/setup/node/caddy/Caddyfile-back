@@ -27,6 +27,8 @@
 	root * /var/www/html
 	file_server
 
+	templates
+
 	encode zstd gzip
 
 	header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
