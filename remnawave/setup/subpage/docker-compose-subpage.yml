@@ -20,7 +20,7 @@ x-env: &env
 
 services:
   remnawave-subscription-page:
-    image: remnawave/subscription-page:8.0.0
+    image: remnawave/subscription-page:8.0.1
     container_name: remnawave-subscription-page
     hostname: remnawave-subscription-page
     <<: [*common, *logging, *env]
