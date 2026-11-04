@@ -478,9 +478,9 @@ https://caddy-steal1.internal {
 # Catch-all for active probes (direct IP or unrecognized SNI)
 https:// {
     log {
-            output stderr
-            level ERROR
-            format json
+        output stderr
+        level ERROR
+        format json
     }
 
     bind unix//dev/shm/caddy.sock
