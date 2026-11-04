@@ -477,16 +477,16 @@ https://caddy-steal1.internal {
 
 # Catch-all for active probes (direct IP or unrecognized SNI)
 https:// {
-        log {
-                output stderr
-                level ERROR
-                format json
-        }
+    log {
+            output stderr
+            level ERROR
+            format json
+    }
 
-        bind unix//dev/shm/caddy.sock
+    bind unix//dev/shm/caddy.sock
 
-        # Load local certs
-        tls /etc/caddy/ssl/fullchain.pem /etc/caddy/ssl/privkey.key
+    # Load local certs
+    tls /etc/caddy/ssl/fullchain.pem /etc/caddy/ssl/privkey.key
 
-        import common_site
+    import common_site
 }
